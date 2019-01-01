@@ -1,0 +1,6 @@
+[submodule "osmpbf"]
+	path = server/libs/osmpbf
+	url = https://github.com/niklaskleinhans/osmpbf.git
+[submodule "Simple-Web-Server"]
+	path = server/libs/Simple-Web-Server
+	url = https://github.com/niklaskleinhans/Simple-Web-Server.git
