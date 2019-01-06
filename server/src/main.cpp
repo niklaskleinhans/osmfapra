@@ -3,10 +3,16 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
-//#include "graphreader.h"
-//#include "graph.h"
+#include "graphreader.h"
+#include "graph.h"
+#include "webserver.h"
 //#include "searchthread.h"
 
+Graph graph;
+
+/**
+ * Dijkstra routing to all  
+ */
 int routeToAll(){
     std::cout << "routeToAll" << std::endl;
     return 0;
@@ -22,52 +28,58 @@ int defaultSearch(){
     return 0;
 }
 
+int runWebserver()
+{
+  std::cout << "starting the Webserver" << std::endl;
+  Webserver::run_server();
+  return 0;
+}
+
 
 int main(int argc, char *argv[]){
     int operation;
     // current time
-    //std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     // if argument exists read file
     if(argc > 1){
     
-    /*
-    //----------- import File -----------//
-    std::cout << "Importing File" << std::endl;
-    // load File
-    std::ifstream infile(argv[1]);
-    // read File and load into Graphstructure
-    //Graph graph;
-    graphReader::readGraph(infile, &graph);
-    // time needed for import
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    auto durationImport = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    std::cout << "time needed for import: " << durationImport << " microseconds" << std::endl;
-    */
+  
+      //----------- import File -----------//
+      // read File and load into Graphstructure
+      // Graph graph;
     
+      GraphReader::read(&graph, argv[1]);
+      std::cout << "---------Graph imported--------" << std::endl;
+      std::cout << "Edges: " << graph.edgecount << std::endl;
+      std::cout << "Nodes: " << graph.nodecount << std::endl;
+      std::cout << "-------------------------------" << std::endl;
+      
+      
+      //--------- User interaction ---------//
+      bool exit = false;
+      while(!exit){
+        std::cout << "\n" << std::endl;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "Please enter desired operation: " << std::endl;
+        std::cout << "(1) Route to all" << std::endl;
+        std::cout << "(2) Route to target " << std::endl;
+        std::cout << "(3) Quit" << std::endl;
+        std::cout << "(4) default(routeToAll 8371825)" << std::endl;
+        std::cout << "(5) starting the webserver" << std::endl;
+        std::cin >> operation;
 
-    //--------- User interaction ---------//
-    bool exit = false;
-    while(!exit){
-      std::cout << "\n" << std::endl;
-      std::cout << "---------------------" << std::endl;
-      std::cout << "Please enter desired operation: " << std::endl;
-      std::cout << "(1) Route to all" << std::endl;
-      std::cout << "(2) Route to target " << std::endl;
-      std::cout << "(3) Quit" << std::endl;
-      std::cout << "(4) default(routeToAll 8371825)" << std::endl;
-      std::cin >> operation;
-
-      switch(operation){
-      case 1: routeToAll();
-        break;
-      case 2: routeToOne();
-        break;
-      case 3: exit=true;
-        break;
-      case 4: defaultSearch();
-        break;
-      default: std::cout<<"Please select one of the Options in the List"<<std::endl;
-        break;
+        switch(operation){
+          case 1: routeToAll();
+            break;
+          case 2: routeToOne();
+            break;
+          case 3: exit=true;
+            break;
+          case 4: defaultSearch();
+            break;
+          case 5: runWebserver();
+            break;
+          default: std::cout<<"Please select one of the Options in the List"<<std::endl;
+            break;
       }
     }
   }

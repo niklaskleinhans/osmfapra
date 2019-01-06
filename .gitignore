@@ -1,3 +1,9 @@
+# Data
+data/*
+
+# Builded webclient
+server/web/*
+
 # Prerequisites
 *.d
 
