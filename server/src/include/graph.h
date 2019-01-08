@@ -14,6 +14,9 @@ class Graph
   int edgecount;
   std::vector<Edge> edges;
   std::vector<int> offset;
+
+  long durationImport;
+  long durationSortAndOffset;
 };
 
 #endif// GRAPH_H

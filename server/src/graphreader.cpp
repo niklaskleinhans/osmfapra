@@ -28,15 +28,23 @@
 int GraphReader::createOffset(Graph* graph)
 {
   int current = -1;
-  for (int i=0; i < graph->edgecount ; i++){
-    if(graph->edges[i].srcID != current ){
-      while(graph->edges[i].srcID > current+1){
-        graph->offset.push_back(-1);
-        current++;
-      }
-        current++;
+  // go through edges
+  for (int i=0; i < graph->edgecount ; i++)
+  {
+    //check for new srcnode
+    if(graph->edges[i].srcID != current )
+    {
+        // check if one node doesnt have an outgoing edge
+        // push -1
+        while(graph->edges[i].srcID > current+1)
+        {
+            graph->offset.push_back(-1);
+            current++;
+        }
+        //else push the id
+        current ++;
         graph->offset.push_back(i);
-    }
+        }
   }
   return 0;
 }
@@ -92,7 +100,7 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                                 }
                                 catch(boost::bad_lexical_cast &)
                                 {
-                                    std::cout << "Fehler: " << way.value(i) << std::endl;
+                                    //std::cout << "Fehler: " << way.value(i) << std::endl;
                                 }
                             } 
                         }
@@ -102,28 +110,34 @@ int GraphReader::read(Graph* graph, char *inputFileName){
 
                     if (way.refsSize())
                     {
-                        int srcID;
+                        long srcID=0;
 			            for(osmpbf::RefIterator refIt(way.refBegin()), refEnd(way.refEnd()); refIt != refEnd; ++refIt) 
                         {
+                            //std::cout << nodeMap.size() << std::endl;
                             if(nodeMap.insert({(long)*refIt, graph->nodecount}).second)
                             {
+                                //if (graph->nodecount < 0) std::cout << "fuck sou" << std::endl;
+                                //std::cout << "inserted " << nodeMap.find(*refIt)->second <<std::endl;
                                 graph->nodes.push_back(Node((long)*refIt));
                                 graph->nodecount++;
                             }
                             if(refIt == way.refBegin()) 
                             {
-                                srcID=*refIt;
+                                srcID=(long)*refIt;
                                 continue;
                             }
                             if(!oneWayFilter.matches(way))
                             {
-                                graph->edges.push_back(Edge(*refIt, srcID));
+                                graph->edges.push_back(Edge(nodeMap.find(*refIt)->second, nodeMap.find(srcID)->second));
                                 graph->edgecount++;
                             }
-                            graph->edges.push_back(Edge(srcID, *refIt));
+                            // std::cout << "[" << srcID << " : " << *refIt  << " : " << nodeMap.find(*refIt)->second << "]" << std::endl;
+                            graph->edges.push_back(Edge(nodeMap.find(srcID)->second, nodeMap.find(*refIt)->second));
                             graph->edgecount++;
                             //std::cout << "added Edge. Edgecount: " << graph->edgecount << std::endl;
-                            srcID = *refIt;
+                            srcID =(long) *refIt;
+                            //std::cout << nodeMap.begin()->second << std::endl;
+                            //std::cout << nodeMap.end()->first << " "<< nodeMap.end()->second << std::endl;
                         }
                     }
                 }
@@ -144,8 +158,8 @@ int GraphReader::read(Graph* graph, char *inputFileName){
             {
                 if(nodeMap.count(node.id()))
                 {
-                    graph->nodes[(*nodeMap.find(node.id())).second].lat = node.latd();
-                    graph->nodes[(*nodeMap.find(node.id())).second].lon = node.lond();
+                    graph->nodes[nodeMap.find(node.id())->second].lat = node.latd();
+                    graph->nodes[nodeMap.find(node.id())->second].lon = node.lond();
 
                 }
             }
@@ -157,30 +171,30 @@ int GraphReader::read(Graph* graph, char *inputFileName){
     
     // time needed for import
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    auto durationImport = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    
+    graph->durationImport = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+    /*
     std::cout << "\n" << std::endl;
     std::cout << "----------Import----------" << std::endl;
-    std::cout << "time needed for import: " << durationImport << " microseconds" << std::endl;
-    std::cout << "=> " << (durationImport /(long)1000000) << " seconds" << std::endl;
-    std::cout << "=> " << (durationImport /(long)60000000) << " minutes" << std::endl;
+    std::cout << "time needed for import: " << graph->durationImport << " microseconds" << std::endl;
+    std::cout << "=> " << (graph->durationImport /(long)1000000) << " seconds" << std::endl;
+    std::cout << "=> " << (graph->durationImport /(long)60000000) << " minutes" << std::endl;
     std::cout << "--------------------------" << std::endl;
     std::cout << "\n" << std::endl;
-
+*/
     // Sort and create Offset
     std::sort(graph->edges.begin(), graph->edges.end(), sort_operator());
     GraphReader::createOffset(graph);
     
     // time needed for sort and create Offset
     std::chrono::high_resolution_clock::time_point t3 = std::chrono::high_resolution_clock::now();
-    auto durationSortAndOffset = std::chrono::duration_cast<std::chrono::microseconds>( t3 - t2 ).count();
-
+    graph->durationSortAndOffset = std::chrono::duration_cast<std::chrono::microseconds>( t3 - t2 ).count();
+/*
     std::cout << "--Sort and Create Offset--" << std::endl;
-    std::cout << "time needed: " << durationSortAndOffset << " microseconds" << std::endl;
-    std::cout << "=> " << (durationSortAndOffset /(long)1000000) << " seconds" << std::endl;
-    std::cout << "=> " << (durationSortAndOffset /(long)60000000) << " minutes" << std::endl;
+    std::cout << "time needed: " << graph->durationSortAndOffset << " microseconds" << std::endl;
+    std::cout << "=> " << (graph->durationSortAndOffset /(long)1000000) << " seconds" << std::endl;
+    std::cout << "=> " << (graph->durationSortAndOffset /(long)60000000) << " minutes" << std::endl;
     std::cout << "--------------------------" << std::endl;
-
+*/
 
 
     return 1;
