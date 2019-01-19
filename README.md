@@ -1,57 +1,57 @@
 # osmfapra
-Fachpraktikum osm Niklas Kleinhans
+Fachpraktikum OpenStreetMaps
+
 
 ## Requirements
-- protobuf >=3.6.1.3_1
+- cmake >= 3.9
+- protobuf >=3.6.1
 - Boost >= 1.68.0
 - Zlib >= 1.2.11
+- make >=3.81
+- gcc >= 7.3.0
+- git  
 
-## Installation
-### Build Requirements
-#### osmpbf
+In .scripts there are some example installation scripts. For building the client some additional requirements are needed:
+- nodejs >= 10.10.0
+- angular CLI >= 7.2.1
+
+## Build
+### Client
 ```
-# if you are using a repo clone
-cd ./server/libs/osmpbf
+cd ./client/
+npm install
+ng build
+```
+
+### Server
+
+#### lib/osmpbf
+```
+cd ./libs/osmpbf
 git submodule init
-git pull --recurse-submodules
+git submodules update --recursive --remote
+cd generics && git submodule init && cd ..
+git submodules update --recursive --remote
 mkdir build
-cmake . -B ./build
-cd build
-make
-
-# if you are using a download
-cd ./server/libs/osmpbf
-git clone https://github.com/inphos42/osmpbf.git .
-mkdir build
-cmake . -B ./build
-cd build
+cd build && cmake .. # (for mac instead use cmake . -B ./build && cd build)
 make
 ```
 
-#### Simple-Web-Server
+#### lib/Simple-Web-Server
 ```
-# if you are using a repo clone
-cd ./server/libs/Simple-Web-Server
+cd ./libs/Simple-Web-Server
 git submodule init
-git pull --recurse-submodules
-
-# if you are using a download
-cd ./server/libs/Simple-Web-Server
+git submodules update --recursive --remote
 git clone https://github.com/eidheim/Simple-Web-Server.git .
 ```
 
-### Build Client
+#### server
 ```
-Requirements and "How to build" is explained in 
-cat ./client/Readme.md
-```
-### Build Server
-```
-cd ./server
+cd ./server/src/
 make
 ```
 
-## How to Start
+## Run
 ```
 ./main.out --path-to-pbf--
 ```

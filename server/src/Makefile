@@ -15,4 +15,4 @@ INC=-I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ..
 
 default:
 	rm -f main.out
-	g++ $(CXXFLAGS) $(INC) $(LIB) main.cpp graphreader.cpp edge.cpp node.cpp webserver.cpp Search.cpp $(LIBS) -o main.out
+	g++ $(CXXFLAGS) $(INC) $(LIB) main.cpp graphreader.cpp edge.cpp node.cpp webserver.cpp search.cpp $(LIBS) -o main.out
