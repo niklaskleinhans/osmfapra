@@ -11,8 +11,7 @@
 #define GRAPHREADER_H
 
 
-class GraphReader{
-public:
+struct GraphReader{
   //int read(Graph* out, char * inputFileName, bool verbose, std::map<string, vector<string>> categories);
   static int read(Graph* out, char * inputFileName);
   static int createOffset(Graph* graph);

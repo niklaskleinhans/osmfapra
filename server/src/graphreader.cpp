@@ -116,7 +116,6 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                             //std::cout << nodeMap.size() << std::endl;
                             if(nodeMap.insert({(long)*refIt, graph->nodecount}).second)
                             {
-                                //if (graph->nodecount < 0) std::cout << "fuck sou" << std::endl;
                                 //std::cout << "inserted " << nodeMap.find(*refIt)->second <<std::endl;
                                 graph->nodes.push_back(Node((long)*refIt));
                                 graph->nodecount++;
@@ -166,21 +165,9 @@ int GraphReader::read(Graph* graph, char *inputFileName){
         }
     }
     
-    
-    
-    
     // time needed for import
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
     graph->durationImport = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    /*
-    std::cout << "\n" << std::endl;
-    std::cout << "----------Import----------" << std::endl;
-    std::cout << "time needed for import: " << graph->durationImport << " microseconds" << std::endl;
-    std::cout << "=> " << (graph->durationImport /(long)1000000) << " seconds" << std::endl;
-    std::cout << "=> " << (graph->durationImport /(long)60000000) << " minutes" << std::endl;
-    std::cout << "--------------------------" << std::endl;
-    std::cout << "\n" << std::endl;
-*/
     // Sort and create Offset
     std::sort(graph->edges.begin(), graph->edges.end(), sort_operator());
     GraphReader::createOffset(graph);
@@ -188,14 +175,6 @@ int GraphReader::read(Graph* graph, char *inputFileName){
     // time needed for sort and create Offset
     std::chrono::high_resolution_clock::time_point t3 = std::chrono::high_resolution_clock::now();
     graph->durationSortAndOffset = std::chrono::duration_cast<std::chrono::microseconds>( t3 - t2 ).count();
-/*
-    std::cout << "--Sort and Create Offset--" << std::endl;
-    std::cout << "time needed: " << graph->durationSortAndOffset << " microseconds" << std::endl;
-    std::cout << "=> " << (graph->durationSortAndOffset /(long)1000000) << " seconds" << std::endl;
-    std::cout << "=> " << (graph->durationSortAndOffset /(long)60000000) << " minutes" << std::endl;
-    std::cout << "--------------------------" << std::endl;
-*/
-
 
     return 1;
 }

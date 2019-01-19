@@ -7,14 +7,14 @@ using namespace std;
 #ifndef NODE_H
 #define NODE_H
 
-class Node
+struct Node
 {
- public:
+  // Node information
   long id;
   float lat;
   float lon;
   int dist;
-  map<string, string> tags;
+  
   Node();
   Node(long _nodeid, float _latitude, float _longitude);
   Node(long _nodeid);

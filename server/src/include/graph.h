@@ -5,18 +5,21 @@
 #include "node.h"
 #include "edge.h"
 #include <vector>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
-class Graph
+struct Graph
 {
- public:
   int nodecount;
-  std::vector<Node> nodes;
   int edgecount;
+  long durationImport;
+  long durationSortAndOffset;
+  
+  std::vector<Node> nodes;
   std::vector<Edge> edges;
   std::vector<int> offset;
 
-  long durationImport;
-  long durationSortAndOffset;
+  int findNode(double longitude, double latitude);
 };
 
 #endif// GRAPH_H

@@ -1,17 +1,18 @@
 #include "webserver.h"
-#include "search.h"
-#include "graphreader.h"
 #include "graph.h"
+#include "include/search.h"
 #include <boost/foreach.hpp>
 
-
-void Webserver::run_server(){
+/**
+ * Starting the Webserver
+ * @Param Graph graph
+ */
+void Webserver::run_server(Graph *graph){
 // HTTP-server at port 8080 using 1 thread
   // Unless you do more heavy non-threaded processing in the resources,
   // 1 thread is usually faster than several threads
   HttpServer server;
   server.config.port = 8080;
-
   // Default GET-example. If no other matches, this anonymous function will be called.
   // Will respond with content in the web/-directory, and its subdirectories.
   // Default file: index.html
@@ -72,6 +73,85 @@ void Webserver::run_server(){
       response->write(SimpleWeb::StatusCode::client_error_bad_request, "Could not open path " + request->path + ": " + e.what());
     }
   };
+
+  // Add route to search by coordinates
+  server.resource["^/routebycoordinate$"]["POST"] = [&](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    try {
+      std::cout << "Post json"<< std::endl;
+      ptree pt;
+      read_json(request->content, pt);
+
+      std::ostringstream oss;
+
+
+      string resultJson;
+      //std::cout << std::setprecision(16) << pt.get<double>("srcLongitude") << std::endl;
+      int srcIDX = Search::findNode(graph, pt.get<double>("srcLongitude"), pt.get<double>("srcLatitude"));
+      int trgIDX = Search::findNode(graph, pt.get<double>("trgLongitude"), pt.get<double>("trgLatitude"));
+      if ( srcIDX != -1 && trgIDX !=-1){
+        pt.add_child("nodes", Search::randomWayReturn(graph, srcIDX));
+        pt.put("error", false);
+      } else{
+        pt.put("error", true);
+        pt.put("errorMessage", "could not find a nodeid");
+      }
+
+      std::cout << "send callback now" << std::endl;
+
+      //write_json(std::cout,pt);
+
+      // TODO VÖLLIGER MIST
+      write_json(oss, pt);
+
+      std::string jsonString = oss.str();
+      //std::cout << jsonString << std::endl;
+      *response 
+      << "HTTP/1.1 200 OK\r\n"
+      << "Content-Length: " << jsonString.length() << "\r\n\r\n"
+      << jsonString;
+    }
+    catch(const exception &e) {
+      *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+                << e.what();
+    }
+  };
+
+  // Add Route for nodeid search
+  server.resource["^/routebynodeid$"]["POST"] = [&](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    try {
+      std::cout << "Post json"<< std::endl;
+      ptree pt;
+      read_json(request->content, pt);
+
+      std::ostringstream oss;
+
+      string resultJson;
+      int srcIDX = pt.get<int>("srcNode");
+      int trgIDX = pt.get<int>("trgNode");
+
+      std::cout << srcIDX << " : " << trgIDX << std::endl;
+
+      pt.add_child("nodes", Search::randomWayReturn(graph,srcIDX));
+      std::cout << "send callback now" << std::endl;
+
+      //write_json(std::cout,pt);
+
+      // TODO VÖLLIGER MIST
+      write_json(oss, pt);
+
+      std::string jsonString = oss.str();
+      //std::cout << jsonString << std::endl;
+      *response 
+      << "HTTP/1.1 200 OK\r\n"
+      << "Content-Length: " << jsonString.length() << "\r\n\r\n"
+      << jsonString;
+    }
+    catch(const exception &e) {
+      *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+      << e.what();
+    }
+  };
+
   
   server.on_error = [](shared_ptr<HttpServer::Request> /*request*/, const SimpleWeb::error_code & /*ec*/) {
     // Handle errors here
@@ -79,7 +159,8 @@ void Webserver::run_server(){
 
   thread server_thread([&server]() {
     // Start server
-      std::cout<<"Start Webserver" << std::endl;
+      std::cout<<"Started Webserver" << std::endl;
+      std::cout<<"Open in your browser: " << "http://localhost" << ":" << server.config.port << std::endl;
     server.start();
   });
   

@@ -20,10 +20,10 @@ using namespace boost::property_tree;
 using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 
 
-class Webserver
+struct Webserver
 {
  public:
-  static void run_server();
+  static void run_server(Graph *graph);
 };
 
 #endif// WEBSERVER_H

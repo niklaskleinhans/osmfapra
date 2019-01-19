@@ -1,9 +1,8 @@
 #ifndef EDGE_H
 #define EDGE_H
 
-class Edge
+struct Edge
 {
- public:
   int srcID;
   int trgID;
   int cost;
