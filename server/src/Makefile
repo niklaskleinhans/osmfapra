@@ -4,7 +4,7 @@ TARGETOS= $(shell uname -s)
 ifeq ($(TARGETOS), Darwin)
     LIBS=-losmpbf -lprotobuf -lz -pthread -lboost_thread-mt -lboost_system -lboost_filesystem
 else 
-    LIBS=-losmpbf -lprotobuf -lz -pthread -lboost_thread -lboost_system -lboost_filesystem
+    LIBS=-losmpbf -lprotobuf -lz -lpthread -pthread -lboost_thread -lboost_system -lboost_filesystem
 endif
 
 LIB=-L ./../libs/osmpbf/build/osmpbf/

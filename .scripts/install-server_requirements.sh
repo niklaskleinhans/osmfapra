@@ -4,4 +4,4 @@ if [ "$(id -u)" != "0" ]; then
 	exit 1
 fi
 
-sudo apt install -y build-essential curl make cmake zlib1g-dev libboost-all-dev gcc-7 g++-7 git
+sudo apt install -y build-essential curl make cmake zlib1g-dev libboost-all-dev gcc-7 g++-7 git 
