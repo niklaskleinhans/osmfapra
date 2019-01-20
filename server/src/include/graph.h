@@ -15,6 +15,7 @@ struct Graph
   long durationImport;
   long durationSortAndOffset;
   
+  std::map<std::string,int> highwaystat;
   std::vector<Node> nodes;
   std::vector<Edge> edges;
   std::vector<int> offset;

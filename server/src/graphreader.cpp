@@ -102,7 +102,17 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                                 {
                                     //std::cout << "Fehler: " << way.value(i) << std::endl;
                                 }
-                            } 
+                            }
+                            if(way.key(i) ==  "highway" )
+                            {
+                                if ( graph->highwaystat.find(way.value(i)) != graph->highwaystat.end() )
+                                {
+                                    graph->highwaystat[way.value(i)] = (graph->highwaystat[way.value(i)]) + 1;
+                                }else
+                                {
+                                    graph->highwaystat.insert({way.value(i), 1});
+                                }
+                            }
                         }
 
                     }

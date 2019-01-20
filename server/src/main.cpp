@@ -28,6 +28,13 @@ int printGraphStats()
   std::cout << "Nodes: " << graph.nodecount << std::endl;
   std::cout << "--------------------------" << std::endl;
   std::cout << "\n" << std::endl;
+  std::cout << "----------Highways--------" << std::endl;
+  for (map<std::string, int>::iterator it = graph.highwaystat.begin(); it != graph.highwaystat.end(); it++)
+  {
+    std::cout << it->first << " : " << it->second << std::endl;
+  }
+  std::cout << "--------------------------" << std::endl;
+  std::cout << "\n" << std::endl;
   std::cout << "----------Import----------" << std::endl;
   std::cout << "time needed for import: " << graph.durationImport << " microseconds" << std::endl;
   std::cout << "=> " << (graph.durationImport /(long)1000000) << " seconds" << std::endl;
