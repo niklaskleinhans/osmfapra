@@ -3,6 +3,30 @@
 #include "include/search.h"
 #include <boost/foreach.hpp>
 
+inline ptree path_to_ptree(vector<Node> path){
+
+  boost::property_tree::ptree matrix_node;
+  for (int i = 0; i < path.size(); i++)
+    {
+      //std::cout << result[i] << " : " << node[0] << " : " << node[1] << std::endl;
+      boost::property_tree::ptree row;
+      // Create an unnamed value
+      boost::property_tree::ptree cell1;
+      cell1.put_value(path[i].lon);
+      // Add the value to our row
+      row.push_back(std::make_pair("", cell1));
+      boost::property_tree::ptree cell2;
+      cell2.put_value(path[i].lat);
+      // Add the value to our row
+      row.push_back(std::make_pair("", cell2));
+
+
+      // Add the row to our matrix
+      matrix_node.push_back(std::make_pair("", row));
+    }
+  return matrix_node;
+}
+
 /**
  * Starting the Webserver
  * @Param Graph graph
@@ -88,8 +112,12 @@ void Webserver::run_server(Graph *graph){
       //std::cout << std::setprecision(16) << pt.get<double>("srcLongitude") << std::endl;
       int srcIDX = Search::findNode(graph, pt.get<double>("srcLongitude"), pt.get<double>("srcLatitude"));
       int trgIDX = Search::findNode(graph, pt.get<double>("trgLongitude"), pt.get<double>("trgLatitude"));
+
+      Result result;
       if ( srcIDX != -1 && trgIDX !=-1){
-        pt.add_child("nodes", Search::randomWayReturn(graph, srcIDX));
+        Search search(graph);
+        search.oneToOne(srcIDX, trgIDX, &result);
+        pt.add_child("nodes", path_to_ptree(result.path));
         pt.put("error", false);
       } else{
         pt.put("error", true);

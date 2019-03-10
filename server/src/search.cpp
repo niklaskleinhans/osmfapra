@@ -1,11 +1,19 @@
 #include "search.h"
 #include "edge.h"
+#include "node.h"
 #include "helper.h"
 #include "stdio.h"
 #include <iostream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+Search::Search(Graph* graph)
+{
+  this->graph = graph;
+  this->visited = std::vector<bool>(graph->nodes.size(), false);
+  this->parents = std::vector<int>(graph->nodes.size(), -1);
+  this->distances = std::vector<int>(graph->nodes.size(), std::numeric_limits<int>::max());
+}
 /**
  * find Node
  * @param Graph graph, double KoordinateX, double KoordinateY
@@ -80,3 +88,61 @@ boost::property_tree::ptree Search::randomWayReturn(Graph *graph, int srcID)
   return matrix_node;
 }
 
+void Search::reset(){
+  // TODO clean up!!
+  u_int stop = std::max(this->touch_parents.size(), this->touch_visited.size());
+
+  this-> priorityQueue = std::priority_queue<pair<int, int>, std::vector<pair<int, int>>, pair_sort_operator>();
+  for (u_int i = 0; i< stop; i++){
+    if (this->touch_visited.size() < i){
+      this->visited[this->touch_visited[i]] = false;
+    }
+    if (this->touch_parents.size() < i){
+      this->parents[this->touch_parents[i]] = -1;
+      this->distances[this->touch_parents[i]] = std::numeric_limits<int>::max();
+    }
+  }
+}
+
+void Search::expand(int source, int costs){
+  this->visited[source] = true;
+  this->touch_visited.push_back(source);
+  if(this->graph->offset[source] == -1) return;
+  for(int i = this->graph->offset[source]; i < this->graph->offset[source+1] ; i++){
+    priorityQueue.push(make_pair((this->graph->edges[i].cost + costs), this->graph->edges[i].trgID));
+    if(this->distances[this->graph->edges[i].trgID]> this->graph->edges[i].cost + costs){
+      this->parents[this->graph->edges[i].trgID] = i;
+      this->distances[this->graph->edges[i].trgID] = this->graph->edges[i].cost + costs;
+    }
+  }
+}
+
+void Search::oneToOne(int source, int target, Result* result){
+  pair<int,int> current;
+  this->expand(source, 0);
+  while(!this->priorityQueue.empty()){
+    current = priorityQueue.top();
+    if (get<1>(current) == target){
+      result->distance = get<0>(current);
+      int currNode = target;
+      result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      while (currNode != source){
+        currNode = this->graph->edges[this->parents[currNode]].srcID;
+        result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      }
+      break;
+    }
+    priorityQueue.pop();
+    if(!this->visited[get<1>(current)])
+      this->expand(get<1>(current), get<0>(current));
+  }
+  return;
+}
+
+void Search::getPath(int source, int currNode, vector<Node>* path){
+      path->insert(path->begin(), this->graph->nodes[currNode]);
+      while (currNode != source){
+        currNode = this->graph->edges[this->parents[currNode]].srcID;
+        path->insert(path->begin(), this->graph->nodes[currNode]);
+      }
+}

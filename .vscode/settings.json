@@ -15,6 +15,7 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "algorithm": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "utility": "cpp"
     }
 }

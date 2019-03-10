@@ -48,6 +48,43 @@ int GraphReader::createOffset(Graph* graph)
   }
   return 0;
 }
+
+/**
+ * deletes multiple stored edges
+ * NOT SURE IF NECESSARY
+ * HOPFULLY NOT. ERASE IS AN REALY UNSAFE WAY TO DELETE VECTOR ENTRYS
+ **/
+int GraphReader::cleanUpMultiEdges(Graph* graph)
+{
+    int currentsrc = -1;
+    std::vector<int> existingtargets;
+    for (int i=0; i < graph->edgecount;)
+    {
+        // Reset everything if edges of new node are handled
+        if(currentsrc != graph->edges[i].srcID)
+        {
+            currentsrc = graph->edges[i].srcID;
+            existingtargets.clear();
+        }
+
+        if(std::find(existingtargets.begin(), existingtargets.end(), graph->edges[i].trgID) != existingtargets.end())
+        {
+          //std::cout<< "deleted edge" << graph->edges[i].srcID << " : " << graph->edges[i].trgID << std::endl;
+          graph->edges.erase(graph->edges.begin()+ i);
+          // the following part sucks. 
+          // erase does not deallocate the underlying storage
+          // thats why we have to fill it with a useless edge
+          graph->edges[graph->edgecount] = Edge(-1, -1);
+          graph->edgecount--;
+          std::cout << " edgecount: " << graph->edgecount << " arrraycount: " << graph->edges.size() << std::endl;
+        }else
+        {
+          existingtargets.push_back(graph->edges[i].trgID);
+          i++;
+        }
+
+    }
+}
         
 /**
  * read file and store data into graphstructure
@@ -123,18 +160,21 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                         long srcID=0;
 			            for(osmpbf::RefIterator refIt(way.refBegin()), refEnd(way.refEnd()); refIt != refEnd; ++refIt) 
                         {
-                            //std::cout << nodeMap.size() << std::endl;
+                            // Add new node if not exist
                             if(nodeMap.insert({(long)*refIt, graph->nodecount}).second)
                             {
                                 //std::cout << "inserted " << nodeMap.find(*refIt)->second <<std::endl;
                                 graph->nodes.push_back(Node((long)*refIt));
                                 graph->nodecount++;
                             }
+                            // For a edge we need 2 nodes.
+                            // Go on with next node
                             if(refIt == way.refBegin()) 
                             {
                                 srcID=(long)*refIt;
                                 continue;
                             }
+                            // If not oneway although ad a backward egde
                             if(!oneWayFilter.matches(way))
                             {
                                 graph->edges.push_back(Edge(nodeMap.find(*refIt)->second, nodeMap.find(srcID)->second));
@@ -144,6 +184,7 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                             graph->edges.push_back(Edge(nodeMap.find(srcID)->second, nodeMap.find(*refIt)->second));
                             graph->edgecount++;
                             //std::cout << "added Edge. Edgecount: " << graph->edgecount << std::endl;
+                            // set target node to new src node for next iteration
                             srcID =(long) *refIt;
                             //std::cout << nodeMap.begin()->second << std::endl;
                             //std::cout << nodeMap.end()->first << " "<< nodeMap.end()->second << std::endl;
@@ -180,6 +221,7 @@ int GraphReader::read(Graph* graph, char *inputFileName){
     graph->durationImport = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     // Sort and create Offset
     std::sort(graph->edges.begin(), graph->edges.end(), sort_operator());
+    //GraphReader::cleanUpMultiEdges(graph);
     GraphReader::createOffset(graph);
     
     // time needed for sort and create Offset

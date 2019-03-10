@@ -1,0 +1,90 @@
+rm -f main.out
+g++ -std=c++11 -Wall -g -march=native -O3 -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -L ./../libs/osmpbf/build/osmpbf/ main.cpp graphreader.cpp edge.cpp node.cpp webserver.cpp -losmpbf -lprotobuf -lz -pthread -lboost_thread-mt -lboost_system -lboost_filesystem -o main.out
+finished Ways, now fill nodes
+
+
+---------------------
+Please enter desired operation: 
+(1) Route to all
+(2) Route to target 
+(3) Quit
+(4) default(routeToAll 8371825)
+(5) starting the webserver
+(6) check some stats
+
+
+----------Graph-----------
+Edges: 2573538
+Nodes: 1273277
+--------------------------
+
+
+----------Import----------
+time needed for import: 24509126 microseconds
+=> 24 seconds
+=> 0 minutes
+time needed for Sort and Offset: 100803 microseconds
+=> 0 seconds
+=> 0 minutes
+--------------------------
+
+
+------Array Check---------
+[nodecount:nodearraysiz]    => [1273277 : 1273277]
+[nodecount:offsetarraysize] => [1273277 : 1273277]
+[edecount:edgearraysize]    => [2573538 : 2573538]
+--------------------------
+
+
+-------Check Edges--------
+Asked for Nodeinformations: [1037419] => latitude: [48.6322] => longitude: [10.1777] 
+Asked for an Edge of Node: [1037419] => offsetvalue : [2139353] => ExampleEdge: [1037419 : 1037418]=> Edgecount: [1]
+Asked for Nodeinformations: [172508] => latitude: [48.6701] => longitude: [9.06203] 
+Asked for an Edge of Node: [172508] => offsetvalue : [369795] => ExampleEdge: [172508 : 172507]=> Edgecount: [1]
+Asked for Nodeinformations: [1153379] => latitude: [48.7336] => longitude: [9.10147] 
+Asked for an Edge of Node: [1153379] => offsetvalue : [2354812] => ExampleEdge: [1153379 : 127421]=> Edgecount: [1]
+Asked for Nodeinformations: [1063248] => latitude: [48.7187] => longitude: [9.26849] 
+Asked for an Edge of Node: [1063248] => offsetvalue : [2187382] => ExampleEdge: [1063248 : 160543]=> Edgecount: [1]
+Asked for Nodeinformations: [161698] => latitude: [48.7639] => longitude: [9.28774] 
+Asked for an Edge of Node: [161698] => offsetvalue : [346524] => ExampleEdge: [161698 : 161783]=> Edgecount: [1]
+Asked for Nodeinformations: [1233696] => latitude: [48.9064] => longitude: [10.3587] 
+Asked for an Edge of Node: [1233696] => offsetvalue : [2502363] => ExampleEdge: [1233696 : 1151836]=> Edgecount: [1]
+Asked for Nodeinformations: [1163036] => latitude: [48.9332] => longitude: [8.9599] 
+Asked for an Edge of Node: [1163036] => offsetvalue : [2372594] => ExampleEdge: [1163036 : 1163035]=> Edgecount: [1]
+Asked for Nodeinformations: [281451] => latitude: [49.1387] => longitude: [9.06356] 
+Asked for an Edge of Node: [281451] => offsetvalue : [601344] => ExampleEdge: [281451 : 281450]=> Edgecount: [1]
+Asked for Nodeinformations: [805207] => latitude: [48.8752] => longitude: [8.96305] 
+Asked for an Edge of Node: [805207] => offsetvalue : [1691012] => ExampleEdge: [805207 : 805208]=> Edgecount: [1]
+Asked for Nodeinformations: [392401] => latitude: [49.0767] => longitude: [9.10779] 
+Asked for an Edge of Node: [392401] => offsetvalue : [839073] => ExampleEdge: [392401 : 392400]=> Edgecount: [1]
+Asked for Nodeinformations: [124202] => latitude: [48.6738] => longitude: [9.21952] 
+Asked for an Edge of Node: [124202] => offsetvalue : [265632] => ExampleEdge: [124202 : 124203]=> Edgecount: [1]
+Asked for Nodeinformations: [696797] => latitude: [48.6961] => longitude: [10.3506] 
+Asked for an Edge of Node: [696797] => offsetvalue : [1473187] => ExampleEdge: [696797 : 696796]=> Edgecount: [1]
+Asked for Nodeinformations: [354623] => latitude: [48.9938] => longitude: [9.39522] 
+Asked for an Edge of Node: [354623] => offsetvalue : [758936] => ExampleEdge: [354623 : 354624]=> Edgecount: [1]
+Asked for Nodeinformations: [239874] => latitude: [48.8356] => longitude: [10.4438] 
+Asked for an Edge of Node: [239874] => offsetvalue : [512846] => ExampleEdge: [239874 : 239873]=> Edgecount: [1]
+Asked for Nodeinformations: [696365] => latitude: [49.1747] => longitude: [9.24777] 
+Asked for an Edge of Node: [696365] => offsetvalue : [1472307] => ExampleEdge: [696365 : 696366]=> Edgecount: [1]
+Asked for Nodeinformations: [1264273] => latitude: [48.8001] => longitude: [8.99239] 
+Asked for an Edge of Node: [1264273] => offsetvalue : [2557101] => ExampleEdge: [1264273 : 1264272]=> Edgecount: [1]
+Asked for Nodeinformations: [1219230] => latitude: [48.6712] => longitude: [9.69157] 
+Asked for an Edge of Node: [1219230] => offsetvalue : [2477004] => ExampleEdge: [1219230 : 614885]=> Edgecount: [1]
+Asked for Nodeinformations: [1268832] => latitude: [49.2974] => longitude: [9.26923] 
+Asked for an Edge of Node: [1268832] => offsetvalue : [2565366] => ExampleEdge: [1268832 : 1268829]=> Edgecount: [1]
+Asked for Nodeinformations: [1228629] => latitude: [49.2149] => longitude: [9.46086] 
+Asked for an Edge of Node: [1228629] => offsetvalue : [2493820] => ExampleEdge: [1228629 : 1228628]=> Edgecount: [1]
+Asked for Nodeinformations: [1232203] => latitude: [48.8545] => longitude: [10.3452] 
+Asked for an Edge of Node: [1232203] => offsetvalue : [2500056] => ExampleEdge: [1232203 : 679687]=> Edgecount: [1]
+--------------------------
+
+
+---------------------
+Please enter desired operation: 
+(1) Route to all
+(2) Route to target 
+(3) Quit
+(4) default(routeToAll 8371825)
+(5) starting the webserver
+(6) check some stats

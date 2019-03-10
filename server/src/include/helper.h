@@ -18,6 +18,17 @@ struct sort_operator
   }
 };
 
+/**
+ * sort two pairs by checking the first entry
+*/
+struct pair_sort_operator
+{
+  inline bool operator() (const pair<int,int>& firstPair, const pair<int,int> secondPair)
+  {
+    return (get<0>(firstPair) > get<0>(secondPair));
+  }
+};
+
 
   /**
    * check float is equal
