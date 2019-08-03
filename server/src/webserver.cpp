@@ -180,6 +180,25 @@ void Webserver::run_server(Graph *graph){
     }
   };
 
+  // Add route to search by coordinates
+  server.resource["^/generatesharingsession$"]["POST"] = [&](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    try {
+      std::string sessionContent = "test";
+      std::ostringstream oss;
+
+      std::string jsonString = sessionContent;
+      //std::cout << jsonString << std::endl;
+      *response 
+      << "HTTP/1.1 200 OK\r\n"
+      << "Content-Length: " << jsonString.length() << "\r\n\r\n"
+      << jsonString;
+    }
+    catch(const exception &e) {
+      *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+                << e.what();
+    }
+  };
+
   
   server.on_error = [](shared_ptr<HttpServer::Request> /*request*/, const SimpleWeb::error_code & /*ec*/) {
     // Handle errors here
