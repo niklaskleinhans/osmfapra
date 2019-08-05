@@ -1,0 +1,18 @@
+aside{
+    position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 1196;
+	width: 220px;
+	overflow: hidden;
+    background: grey;
+    opacity: 0.8;
+	border-right: 1px solid lighten(black, 2%);
+	color: white;
+	box-sizing: border-box;
+
+    .share-link-field {
+        color: red;
+      }
+}

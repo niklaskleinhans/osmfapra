@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators} from 'redux'
 import { connect } from 'react-redux'
 
-import Home from './views/Home'
 import Notifications from './components/Notifications'
+import Home from './views/Home'
 
 import * as mqttActions from './services/mqtt/actions'
 
@@ -14,7 +14,10 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.props.mqttActions.initMqttConnection()
+    var actionTopicMapping = {
+        'RECEIVE_COORDINATES': 'client/coordinates/1234'
+    };
+    this.props.mqttActions.initMqttConnection(actionTopicMapping)
   }
 
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 import Map from '../components/Map'
-import Demo from '../components/Demo'
+import Sidebar from '../components/Sidebar'
 
 import * as coreActions from '../services/core/actions'
 import * as mqttActions from '../services/mqtt/actions'
@@ -25,9 +25,7 @@ class Home extends Component{
     render(){
         return(
             <div>
-                <h1>Home sweet Home</h1>
-                <h2>{this.props.name}</h2>
-                <button onClick={e => this.createNotification()}>click me </button>
+                <Sidebar></Sidebar>
                 <Map></Map>
             </div>
         )

@@ -3,10 +3,13 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl} from 'react-leaflet';
 import { getPosition } from 'redux-effects-geolocation';
 import store from '../bootstrap';
 import { throws } from 'assert';
+
+import * as mapActions from '../services/map/actions'
+
 
 class Map extends React.Component{
 
@@ -17,11 +20,10 @@ class Map extends React.Component{
         }
     }
 
-    startGeoInterval(){
-        console.log("start interval")
-        this.geoInterval = setInterval(()=> {
-            this.getLocation({ enableHighAccuracy : true})
-            }, 1000)
+    invalidateMap() {
+        if (this.refs.map) {
+          this.refs.map.leafletElement.invalidateSize();
+      }
     }
 
     stopGeoInterval(){
@@ -30,7 +32,8 @@ class Map extends React.Component{
     }
 
     componentDidMount(){
-        this.startGeoInterval()
+        //this.getLocation()
+        this.props.mapActions.getCurrentLocation()
     }
 
     getLocation(){
@@ -41,7 +44,6 @@ class Map extends React.Component{
            },
            error => {
                alert(error.message)
-               clearInterval(this.geoInterval)
                console.log(error)
            }
        )
@@ -51,21 +53,31 @@ class Map extends React.Component{
     render(){
         return (
             <LeafletMap
+            className='map-view'
+            ref="map" 
+            onDragEnd={this.invalidateMap()}
         center={[50, 10]}
         zoom={6}
+        zoomControl = {false}
         attributionControl={true}
-        zoomControl={true}
         doubleClickZoom={true}
         scrollWheelZoom={true}
         dragging={true}
         animate={true}
         easeLinearity={0.35}
       >
+        <ZoomControl position="topright"/>
         <TileLayer
         attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-        {this.state.position ? 
-        <Marker position={this.state.position}>
+        {this.props.position ? 
+        <Marker position={this.props.position}>
+          <Popup>
+            Popup for any custom information.
+          </Popup>
+        </Marker> : null}
+        {this.props.positionFriend ?
+        <Marker position={this.props.positionFriend} className='friend-marker'>
           <Popup>
             Popup for any custom information.
           </Popup>
@@ -84,12 +96,15 @@ class Map extends React.Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
+        positionFriend : state.map.friendCoordinates,
+        position : state.map.currentCoordinates
 
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        mapActions: bindActionCreators(mapActions, dispatch)
     }
 }
 

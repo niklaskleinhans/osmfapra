@@ -1,4 +1,6 @@
 import * as coreActions from './actions'
+import * as mqttActions from '../mqtt/actions'
+import { nextTick } from 'q';
 
 const coreMiddleware = (function(){
     return store => next => action => {
@@ -55,6 +57,13 @@ const coreMiddleware = (function(){
 
                 next(action);
                 break;
+            case 'GENERATE_SHARE_LINK':
+                var sharelinkkey = 13333443
+                store.dispatch(mqttActions.generateShareLinkListener(sharelinkkey))
+                action.sharelink = window.location.href + 'sharelocation'+ '/'+ sharelinkkey
+                next(action)
+                break;
+
             default:
                 return next(action)
         }

@@ -4,14 +4,19 @@ import * as helpers from './helpers'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
+import { routerReducer } from 'react-router-redux'
 import core from './services/core/reducer'
+import map from './services/map/reducer'
 import mqtt from './services/mqtt/reducer'
 import coreMiddleware from './services/core/middleware'
+import mapMiddleware from './services/map/middleware'
 import mqttMiddleware from './services/mqtt/middleware'
 
 let reducers = combineReducers({
     core,
-    mqtt
+    map,
+    mqtt,
+    routing: routerReducer
 });
 
 
@@ -22,11 +27,13 @@ let initialState = {
     mqtt:{
 
     },
-    notifications: {}
+    notifications: {},
+    map:{}
 }
 
 initialState.core = Object.assign({}, initialState.core, helpers.getStorage('core'))
 initialState.mqtt = Object.assign({}, initialState.mqtt, helpers.getStorage('mqtt'))
+initialState.map = Object.assign({}, initialState.map, helpers.getStorage('map'))
 
 const composeEnhancers =composeWithDevTools({
 
@@ -36,7 +43,7 @@ let store = createStore(
     reducers,
     initialState,
     composeEnhancers(
-        applyMiddleware(thunk, geoMiddleware(), coreMiddleware, mqttMiddleware)
+        applyMiddleware(thunk, geoMiddleware(), coreMiddleware,mapMiddleware, mqttMiddleware)
     )
 )
 

@@ -41,6 +41,8 @@ class MQTTRedux {
         });
 
         this.mqtt.on('message', (topic, payload) => {
+            console.log(payload.toString())
+            console.log(this.topicActionMap)
             if (this.topicActionMap[topic]) {
                 store.dispatch({
                     type: this.topicActionMap[topic],

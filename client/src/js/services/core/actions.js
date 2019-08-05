@@ -45,10 +45,9 @@ export function removeNotification(key, manual = false){
     }
 }
 
-/*else */
-export function setName(name){
+export function generateShareLink(){
     return {
-        type: 'SET_NAME',
-        payload: name
+        type: 'GENERATE_SHARE_LINK'
     }
 }
+

@@ -16,6 +16,8 @@ export default function reducer(core = {}, action){
             var notifications = Object.assign({}, core.notifications);
             delete notifications[action.key];
             return Object.assign({}, core, {notifications: notifications});
+        case 'GENERATE_SHARE_LINK':
+            return Object.assign({}, core, {sharelink: action.sharelink})
         default:
             return core;
     }

@@ -18,9 +18,18 @@ body {
   }
  
 .leaflet-container {
-    height: 400px;
-    width: 800px;
+    height: 100vh;
+    width: 100%;
     margin: 0 auto;
+}
+
+.map-view {
+  position: relative;
+}
+.friend-marker {
+  background-color : red;
 } 
+
+
   
   
