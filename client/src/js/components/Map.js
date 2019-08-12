@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl} from 'react-leaflet';
+import { Map as LeafletMap, TileLayer, Marker, Popup, ZoomControl, Polyline} from 'react-leaflet';
 import { getPosition } from 'redux-effects-geolocation';
 import store from '../bootstrap';
 import { throws } from 'assert';
@@ -82,6 +82,7 @@ class Map extends React.Component{
             Popup for any custom information.
           </Popup>
         </Marker> : null}
+       {this.props.route ? <Polyline ref={line => {this.line = line}} positions = {this.props.route}/> : null}
       </LeafletMap>
     );
     }
@@ -97,7 +98,8 @@ class Map extends React.Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         positionFriend : state.map.friendCoordinates,
-        position : state.map.currentCoordinates
+        position : state.map.currentCoordinates,
+        route : state.map.route.nodes
 
     }
 }

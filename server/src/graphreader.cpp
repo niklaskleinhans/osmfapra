@@ -19,7 +19,32 @@
 #include <algorithm>
 #include <string>
 
+const static float EarthRadius = 6372.8;
 
+inline float DegreeToRadian(float angle)
+{
+	return M_PI * angle / 180.0;
+}
+
+inline float haversine(float lat1,float lon1, float lat2, float lon2)
+{
+    float latRad1 = DegreeToRadian(lat1);
+    float latRad2 = DegreeToRadian(lat2);
+    float lonRad1 = DegreeToRadian(lon1);
+    float lonRad2 = DegreeToRadian(lon2);
+    float diffLa = latRad2 - latRad1;
+    float doffLo = lonRad2 - lonRad1;
+    float computation = asin(sqrt(sin(diffLa / 2) * sin(diffLa / 2) + cos(latRad1) * cos(latRad2) * sin(doffLo / 2) * sin(doffLo / 2)));
+    return 2 * EarthRadius * computation;
+}
+
+inline int calculateWeight(float lat1, float lon1, float lat2, float lon2, int maxSpeed){
+    if (maxSpeed <1){
+        maxSpeed = 1;
+    }  
+    float distance = haversine(lat1, lon1, lat2, lon2);
+    return (int) ((100 * distance * 3600)/maxSpeed);
+}
 
 /*
  * create Offset for outgoing edges
@@ -31,6 +56,11 @@ int GraphReader::createOffset(Graph* graph)
   // go through edges
   for (int i=0; i < graph->edgecount ; i++)
   {
+      graph->edges[i].cost = calculateWeight(graph->nodes[graph->edges[i].srcID].lat,
+                                             graph->nodes[graph->edges[i].srcID].lon,
+                                             graph->nodes[graph->edges[i].trgID].lat,
+                                             graph->nodes[graph->edges[i].trgID].lon,
+                                             graph->edges[i].maxSpeed);
     //check for new srcnode
     if(graph->edges[i].srcID != current )
     {
@@ -105,6 +135,7 @@ int GraphReader::read(Graph* graph, char *inputFileName){
     
     // Add Filter
     osmpbf::KeyMultiValueTagFilter oneWayFilter("oneway",{"yes"});
+    osmpbf::KeyMultiValueTagFilter maxSpeedFilter("maxspeed", {"none", "signals"});
 	osmpbf::AndTagFilter andFilter({
              new osmpbf::KeyMultiValueTagFilter("highway", {"motorway", "motorway_link", "primary", "primary_link", "secondary",
                                                 "secondary_link", "tertiary", "tertiary_link", "trunk", "trunk_link", "unclassified", 
@@ -113,9 +144,27 @@ int GraphReader::read(Graph* graph, char *inputFileName){
     andFilter.assignInputAdaptor(&pbi);
     andFilter.rebuildCache();
     oneWayFilter.rebuildCache();
+    maxSpeedFilter.rebuildCache();
 
     // mapping osmID to localID
     std::map<long,int> nodeMap;
+    std::map<std::string, int> speedMap;
+    speedMap.insert(std::pair<std::string, int>("motorway",  130));
+    speedMap.insert(std::pair<std::string, int>("motorway_link",  70));
+    speedMap.insert(std::pair<std::string, int>("primary" ,  100));
+    speedMap.insert(std::pair<std::string, int>("primary_link" ,  70));
+    speedMap.insert(std::pair<std::string, int>("secondary",  80));
+    speedMap.insert(std::pair<std::string, int>("secondary_link",  70));
+    speedMap.insert(std::pair<std::string, int>("tertiary", 70));
+    speedMap.insert(std::pair<std::string, int>("tertiary_link", 70));
+    speedMap.insert(std::pair<std::string, int>("trunk", 130));
+    speedMap.insert(std::pair<std::string, int>("trunk_link", 80));
+    speedMap.insert(std::pair<std::string, int>("unclassified", 50));
+    speedMap.insert(std::pair<std::string, int>("residential", 45));
+    speedMap.insert(std::pair<std::string, int>("living_street", 5));
+    speedMap.insert(std::pair<std::string, int>("road", 50));
+    speedMap.insert(std::pair<std::string, int>("service", 30));
+    speedMap.insert(std::pair<std::string, int>("turning_circle", 50));
 
     // reading ways
     while(inFile.parseNextBlock(pbi))
@@ -125,7 +174,9 @@ int GraphReader::read(Graph* graph, char *inputFileName){
             for(osmpbf::IWayStream way = pbi.getWayStream(); !way.isNull(); way.next()){
                 if (andFilter.matches(way))
                 {
-                    int maxSpeed=0;
+                    int maxSpeed=1;
+                    bool maxspeedset = false;
+                    std::string highwayname = "";
                     if(way.tagsSize())
                     {
                         for(uint32_t i = 0, s = way.tagsSize();  i < s; ++i) 
@@ -134,14 +185,16 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                                 try
                                 {
                                     maxSpeed = boost::lexical_cast<int>(way.value(i));
+                                    maxspeedset=true;
                                 }
                                 catch(boost::bad_lexical_cast &)
                                 {
-                                    //std::cout << "Fehler: " << way.value(i) << std::endl;
+                                    std::cout << "Fehler: " << way.value(i) << std::endl;
                                 }
                             }
                             if(way.key(i) ==  "highway" )
                             {
+                                highwayname = way.value(i);
                                 if ( graph->highwaystat.find(way.value(i)) != graph->highwaystat.end() )
                                 {
                                     graph->highwaystat[way.value(i)] = (graph->highwaystat[way.value(i)]) + 1;
@@ -149,6 +202,15 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                                 {
                                     graph->highwaystat.insert({way.value(i), 1});
                                 }
+                            }
+                        }
+                        if(!maxspeedset){
+                            try 
+                            {
+                                maxSpeed = speedMap[ highwayname ];
+                            }
+                            catch (const std::exception& e){
+                                std::cout << e.what() << std::endl;
                             }
                         }
 
@@ -177,11 +239,11 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                             // If not oneway although ad a backward egde
                             if(!oneWayFilter.matches(way))
                             {
-                                graph->edges.push_back(Edge(nodeMap.find(*refIt)->second, nodeMap.find(srcID)->second));
+                                graph->edges.push_back(Edge(nodeMap.find(*refIt)->second, nodeMap.find(srcID)->second, maxSpeed));
                                 graph->edgecount++;
                             }
                             // std::cout << "[" << srcID << " : " << *refIt  << " : " << nodeMap.find(*refIt)->second << "]" << std::endl;
-                            graph->edges.push_back(Edge(nodeMap.find(srcID)->second, nodeMap.find(*refIt)->second));
+                            graph->edges.push_back(Edge(nodeMap.find(srcID)->second, nodeMap.find(*refIt)->second, maxSpeed));
                             graph->edgecount++;
                             //std::cout << "added Edge. Edgecount: " << graph->edgecount << std::endl;
                             // set target node to new src node for next iteration

@@ -1,6 +1,9 @@
 import * as coreActions from './actions'
 import * as mqttActions from '../mqtt/actions'
+import * as mapActions from '../map/actions'
 import { nextTick } from 'q';
+
+const axios = require('axios');
 
 const coreMiddleware = (function(){
     return store => next => action => {
@@ -63,7 +66,31 @@ const coreMiddleware = (function(){
                 action.sharelink = window.location.href + 'sharelocation'+ '/'+ sharelinkkey
                 next(action)
                 break;
-
+            case 'GET_ROUTE_BY_COORDINATE':
+                var coordinates = {
+                        "srcLongitude" : store.getState().map.friendCoordinates[1], 
+                        "srcLatitude" : store.getState().map.friendCoordinates[0], 
+                        "trgLongitude" : store.getState().map.currentCoordinates[1], 
+                        "trgLatitude" : store.getState().map.currentCoordinates[0]
+                    }
+                if (!store.getState().core.routeonrequest){
+                    action.routeonrequest = true
+                    axios({
+                        method: 'post',
+                        url: '/routebycoordinate',
+                        data: coordinates
+                    }).then((res)=>{
+                        action.routeonrequest = false
+                        store.dispatch(mapActions.storeRoute(res.data))
+                        next(action)
+                    }).catch(e =>{
+                        action.routeonrequest = false
+                        console.log(e)
+                        next(action)
+                    })
+                next(action)
+                }
+                break;
             default:
                 return next(action)
         }

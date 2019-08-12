@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
 import {Router, Route, Switch} from 'react-router'
-import createHistory from 'history/createBrowserHistory';
+import createHistory from 'history/createHashHistory';
 
 import App from './App';
 import Home from './views/Home'
@@ -21,8 +21,8 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history = {history}>
             <Switch>
-                <Route exact path="/" component={App}/>
-                <Route path="/ShareLocation/:sharekey" component={ShareLocation}/>
+                <Route exact path={global.baseURL} component={App}/>
+                <Route path={global.baseURL + "sharelocation/:sharekey"} component={ShareLocation}/>
             </Switch>
         </Router>
     </Provider>, 

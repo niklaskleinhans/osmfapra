@@ -3,8 +3,8 @@ import * as coreActions from '../core/actions'
 import * as mapActions from '../map/actions'
 
 const mqttConfig = {
-    url: 'ws://192.168.1.21:15675/ws',
-    //url: 'wss://localhost:15673/ws',
+    //url: 'ws://192.168.1.21:15675/ws',
+    url: 'wss://192.168.1.21:15673/ws',
     opt: {
       clientId: 'osm-' + Date.now(),
       protocolId: 'MQIsdp',
@@ -28,13 +28,23 @@ const mqttMiddleware = (function(){
                 break;
             case 'MQTT_PUBLISH':
                 mqttRedux.publish(action.topic, action.payload)
+                next(action)
+                break;
+            case 'MQTT_ERROR':
+                store.dispatch(coreActions.createNotification({content: action.error, type: 'bad'}))
+                next(action)
+                break;
             case 'RECEIVE_COORDINATES':
                 //store.dispatch(coreActions.createNotification({content:action.payload, type:'good'}))
                 store.dispatch(mapActions.updateCoordinatesFriend(JSON.parse(action.payload)))
+                store.dispatch(coreActions.getRouteByCoordinate())
+                next(action)
+                break;
             case 'GENERATE_SHARE_LINK_LISTENER':
-                // TODO appendSubscriber
-                console.log('client/coordinates/' + action.payload)
+                //console.log('client/coordinates/' + action.payload)
                 mqttRedux.subscribe({'RECEIVE_COORDINATES': 'client/coordinates/' + action.payload})
+                next(action)
+                break;
             default:
                 return next(action)
         }

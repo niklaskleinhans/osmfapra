@@ -60,9 +60,15 @@ int printGraphStats()
   int currentEdgeID=0;
   int sumOfMultiEdges = 0;
   boost::random::mt19937 gen;
+  std::vector<int> edgeCostValues;
+  std::vector<int> maxSpeedValues;
+  
   for (int m=0; m< graph.nodecount; ++m)
   {
+
     currentEdgeID=graph.offset[m];
+    edgeCostValues.push_back(graph.edges[currentEdgeID].cost);
+    maxSpeedValues.push_back(graph.edges[currentEdgeID].maxSpeed);
     // count nodes with no outgoing edges
     if( currentEdgeID == -1) 
     {
@@ -104,6 +110,15 @@ int printGraphStats()
 
   std::cout << "Multi Edge Count: " << sumOfMultiEdges << std::endl;
   std::cout << "Sink Point Count: " << sink<< std::endl;
+  std::cout << "--------------------------" << std::endl;
+  std::sort(maxSpeedValues.begin(), maxSpeedValues.end());
+  auto uniquemaxSpeedList = std::unique(maxSpeedValues.begin(), maxSpeedValues.end());
+  maxSpeedValues.erase(uniquemaxSpeedList, maxSpeedValues.end());
+  std::cout << " maxSpeed List: "  << std::endl;
+  for (int i : maxSpeedValues) {
+    std::cout << i << " ";
+  }
+  std::cout << "\n";
   std::cout << "--------------------------" << std::endl;
   return 0;
 }

@@ -1,90 +1,232 @@
 rm -f main.out
-g++ -std=c++11 -Wall -g -march=native -O3 -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -L ./../libs/osmpbf/build/osmpbf/ main.cpp graphreader.cpp edge.cpp node.cpp webserver.cpp -losmpbf -lprotobuf -lz -pthread -lboost_thread-mt -lboost_system -lboost_filesystem -o main.out
-finished Ways, now fill nodes
-
-
----------------------
-Please enter desired operation: 
-(1) Route to all
-(2) Route to target 
-(3) Quit
-(4) default(routeToAll 8371825)
-(5) starting the webserver
-(6) check some stats
-
-
-----------Graph-----------
-Edges: 2573538
-Nodes: 1273277
---------------------------
-
-
-----------Import----------
-time needed for import: 24509126 microseconds
-=> 24 seconds
-=> 0 minutes
-time needed for Sort and Offset: 100803 microseconds
-=> 0 seconds
-=> 0 minutes
---------------------------
-
-
-------Array Check---------
-[nodecount:nodearraysiz]    => [1273277 : 1273277]
-[nodecount:offsetarraysize] => [1273277 : 1273277]
-[edecount:edgearraysize]    => [2573538 : 2573538]
---------------------------
-
-
--------Check Edges--------
-Asked for Nodeinformations: [1037419] => latitude: [48.6322] => longitude: [10.1777] 
-Asked for an Edge of Node: [1037419] => offsetvalue : [2139353] => ExampleEdge: [1037419 : 1037418]=> Edgecount: [1]
-Asked for Nodeinformations: [172508] => latitude: [48.6701] => longitude: [9.06203] 
-Asked for an Edge of Node: [172508] => offsetvalue : [369795] => ExampleEdge: [172508 : 172507]=> Edgecount: [1]
-Asked for Nodeinformations: [1153379] => latitude: [48.7336] => longitude: [9.10147] 
-Asked for an Edge of Node: [1153379] => offsetvalue : [2354812] => ExampleEdge: [1153379 : 127421]=> Edgecount: [1]
-Asked for Nodeinformations: [1063248] => latitude: [48.7187] => longitude: [9.26849] 
-Asked for an Edge of Node: [1063248] => offsetvalue : [2187382] => ExampleEdge: [1063248 : 160543]=> Edgecount: [1]
-Asked for Nodeinformations: [161698] => latitude: [48.7639] => longitude: [9.28774] 
-Asked for an Edge of Node: [161698] => offsetvalue : [346524] => ExampleEdge: [161698 : 161783]=> Edgecount: [1]
-Asked for Nodeinformations: [1233696] => latitude: [48.9064] => longitude: [10.3587] 
-Asked for an Edge of Node: [1233696] => offsetvalue : [2502363] => ExampleEdge: [1233696 : 1151836]=> Edgecount: [1]
-Asked for Nodeinformations: [1163036] => latitude: [48.9332] => longitude: [8.9599] 
-Asked for an Edge of Node: [1163036] => offsetvalue : [2372594] => ExampleEdge: [1163036 : 1163035]=> Edgecount: [1]
-Asked for Nodeinformations: [281451] => latitude: [49.1387] => longitude: [9.06356] 
-Asked for an Edge of Node: [281451] => offsetvalue : [601344] => ExampleEdge: [281451 : 281450]=> Edgecount: [1]
-Asked for Nodeinformations: [805207] => latitude: [48.8752] => longitude: [8.96305] 
-Asked for an Edge of Node: [805207] => offsetvalue : [1691012] => ExampleEdge: [805207 : 805208]=> Edgecount: [1]
-Asked for Nodeinformations: [392401] => latitude: [49.0767] => longitude: [9.10779] 
-Asked for an Edge of Node: [392401] => offsetvalue : [839073] => ExampleEdge: [392401 : 392400]=> Edgecount: [1]
-Asked for Nodeinformations: [124202] => latitude: [48.6738] => longitude: [9.21952] 
-Asked for an Edge of Node: [124202] => offsetvalue : [265632] => ExampleEdge: [124202 : 124203]=> Edgecount: [1]
-Asked for Nodeinformations: [696797] => latitude: [48.6961] => longitude: [10.3506] 
-Asked for an Edge of Node: [696797] => offsetvalue : [1473187] => ExampleEdge: [696797 : 696796]=> Edgecount: [1]
-Asked for Nodeinformations: [354623] => latitude: [48.9938] => longitude: [9.39522] 
-Asked for an Edge of Node: [354623] => offsetvalue : [758936] => ExampleEdge: [354623 : 354624]=> Edgecount: [1]
-Asked for Nodeinformations: [239874] => latitude: [48.8356] => longitude: [10.4438] 
-Asked for an Edge of Node: [239874] => offsetvalue : [512846] => ExampleEdge: [239874 : 239873]=> Edgecount: [1]
-Asked for Nodeinformations: [696365] => latitude: [49.1747] => longitude: [9.24777] 
-Asked for an Edge of Node: [696365] => offsetvalue : [1472307] => ExampleEdge: [696365 : 696366]=> Edgecount: [1]
-Asked for Nodeinformations: [1264273] => latitude: [48.8001] => longitude: [8.99239] 
-Asked for an Edge of Node: [1264273] => offsetvalue : [2557101] => ExampleEdge: [1264273 : 1264272]=> Edgecount: [1]
-Asked for Nodeinformations: [1219230] => latitude: [48.6712] => longitude: [9.69157] 
-Asked for an Edge of Node: [1219230] => offsetvalue : [2477004] => ExampleEdge: [1219230 : 614885]=> Edgecount: [1]
-Asked for Nodeinformations: [1268832] => latitude: [49.2974] => longitude: [9.26923] 
-Asked for an Edge of Node: [1268832] => offsetvalue : [2565366] => ExampleEdge: [1268832 : 1268829]=> Edgecount: [1]
-Asked for Nodeinformations: [1228629] => latitude: [49.2149] => longitude: [9.46086] 
-Asked for an Edge of Node: [1228629] => offsetvalue : [2493820] => ExampleEdge: [1228629 : 1228628]=> Edgecount: [1]
-Asked for Nodeinformations: [1232203] => latitude: [48.8545] => longitude: [10.3452] 
-Asked for an Edge of Node: [1232203] => offsetvalue : [2500056] => ExampleEdge: [1232203 : 679687]=> Edgecount: [1]
---------------------------
-
-
----------------------
-Please enter desired operation: 
-(1) Route to all
-(2) Route to target 
-(3) Quit
-(4) default(routeToAll 8371825)
-(5) starting the webserver
-(6) check some stats
+g++ -std=c++11 -Wall -g -march=native -O3 -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/  -I /usr/local/opt/openssl/include -L ./../libs/osmpbf/build/osmpbf/  -L /usr/local/opt/openssl/lib main.cpp graphreader.cpp edge.cpp node.cpp webserver.cpp search.cpp -lssl -losmpbf -lprotobuf -lz -pthread  -lboost_thread-mt -lboost_system -lboost_filesystem  -v -o main.out
+Apple LLVM version 10.0.1 (clang-1001.0.46.4)
+Target: x86_64-apple-darwin18.6.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.14.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -disable-free -disable-llvm-verifier -discard-value-names -main-file-name main.cpp -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.14 -target-cpu skylake -target-feature +sse2 -target-feature +cx16 -target-feature +sahf -target-feature -tbm -target-feature -avx512ifma -target-feature -sha -target-feature -gfni -target-feature -fma4 -target-feature -vpclmulqdq -target-feature +prfchw -target-feature +bmi2 -target-feature -cldemote -target-feature +fsgsbase -target-feature -ptwrite -target-feature +xsavec -target-feature +popcnt -target-feature +aes -target-feature -avx512bitalg -target-feature -movdiri -target-feature +xsaves -target-feature -avx512er -target-feature -avx512vnni -target-feature -avx512vpopcntdq -target-feature -pconfig -target-feature -clwb -target-feature -avx512f -target-feature -clzero -target-feature -pku -target-feature +mmx -target-feature -lwp -target-feature -rdpid -target-feature -xop -target-feature +rdseed -target-feature -waitpkg -target-feature -movdir64b -target-feature -sse4a -target-feature -avx512bw -target-feature +clflushopt -target-feature +xsave -target-feature -avx512vbmi2 -target-feature -avx512vl -target-feature +invpcid -target-feature -avx512cd -target-feature +avx -target-feature -vaes -target-feature -rtm -target-feature +fma -target-feature +bmi -target-feature +rdrnd -target-feature -mwaitx -target-feature +sse4.1 -target-feature +sse4.2 -target-feature +avx2 -target-feature -wbnoinvd -target-feature +sse -target-feature +lzcnt -target-feature +pclmul -target-feature -prefetchwt1 -target-feature +f16c -target-feature +ssse3 -target-feature +sgx -target-feature -shstk -target-feature +cmov -target-feature -avx512vbmi -target-feature +movbe -target-feature +xsaveopt -target-feature -avx512dq -target-feature +adx -target-feature -avx512pf -target-feature +sse3 -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=lldb -target-linker-version 450.3 -v -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -I /usr/local/opt/openssl/include -I/usr/local/include -stdlib=libc++ -O3 -Wall -Wno-atomic-implicit-seq-cst -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-quoted-include-in-framework-header -std=c++11 -fdeprecated-macro -fdebug-compilation-dir /Users/niklas/develop/uni/osmfapra/server/src -ferror-limit 19 -fmessage-length 0 -pthread -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.14.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -vectorize-loops -vectorize-slp -o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/main-b96957.o -x c++ main.cpp
+clang -cc1 version 10.0.1 (clang-1001.0.46.4) default target x86_64-apple-darwin18.6.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ ./include
+ ../libs/osmpbf/osmpbf/include
+ ../libs/osmpbf
+ .
+ ../libs/Simple-Web-Server
+ /usr/local/opt/openssl/include
+ /usr/local/include
+ /Library/Developer/CommandLineTools/usr/include/c++/v1
+ /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include
+ /Library/Developer/CommandLineTools/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+In file included from main.cpp:14:
+In file included from ./include/search.h:5:
+./include/helper.h:36:15: warning: unused function 'double_equals' [-Wunused-function]
+  static bool double_equals(double a, double b, double epsilon = 0.00001)
+              ^
+./include/helper.h:41:17: warning: unused function 'point_distance' [-Wunused-function]
+  static double point_distance(double x1 , double x2, double y1, double y2){
+                ^
+2 warnings generated.
+ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.14.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -disable-free -disable-llvm-verifier -discard-value-names -main-file-name graphreader.cpp -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.14 -target-cpu skylake -target-feature +sse2 -target-feature +cx16 -target-feature +sahf -target-feature -tbm -target-feature -avx512ifma -target-feature -sha -target-feature -gfni -target-feature -fma4 -target-feature -vpclmulqdq -target-feature +prfchw -target-feature +bmi2 -target-feature -cldemote -target-feature +fsgsbase -target-feature -ptwrite -target-feature +xsavec -target-feature +popcnt -target-feature +aes -target-feature -avx512bitalg -target-feature -movdiri -target-feature +xsaves -target-feature -avx512er -target-feature -avx512vnni -target-feature -avx512vpopcntdq -target-feature -pconfig -target-feature -clwb -target-feature -avx512f -target-feature -clzero -target-feature -pku -target-feature +mmx -target-feature -lwp -target-feature -rdpid -target-feature -xop -target-feature +rdseed -target-feature -waitpkg -target-feature -movdir64b -target-feature -sse4a -target-feature -avx512bw -target-feature +clflushopt -target-feature +xsave -target-feature -avx512vbmi2 -target-feature -avx512vl -target-feature +invpcid -target-feature -avx512cd -target-feature +avx -target-feature -vaes -target-feature -rtm -target-feature +fma -target-feature +bmi -target-feature +rdrnd -target-feature -mwaitx -target-feature +sse4.1 -target-feature +sse4.2 -target-feature +avx2 -target-feature -wbnoinvd -target-feature +sse -target-feature +lzcnt -target-feature +pclmul -target-feature -prefetchwt1 -target-feature +f16c -target-feature +ssse3 -target-feature +sgx -target-feature -shstk -target-feature +cmov -target-feature -avx512vbmi -target-feature +movbe -target-feature +xsaveopt -target-feature -avx512dq -target-feature +adx -target-feature -avx512pf -target-feature +sse3 -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=lldb -target-linker-version 450.3 -v -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -I /usr/local/opt/openssl/include -I/usr/local/include -stdlib=libc++ -O3 -Wall -Wno-atomic-implicit-seq-cst -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-quoted-include-in-framework-header -std=c++11 -fdeprecated-macro -fdebug-compilation-dir /Users/niklas/develop/uni/osmfapra/server/src -ferror-limit 19 -fmessage-length 0 -pthread -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.14.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -vectorize-loops -vectorize-slp -o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/graphreader-60ca63.o -x c++ graphreader.cpp
+clang -cc1 version 10.0.1 (clang-1001.0.46.4) default target x86_64-apple-darwin18.6.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ ./include
+ ../libs/osmpbf/osmpbf/include
+ ../libs/osmpbf
+ .
+ ../libs/Simple-Web-Server
+ /usr/local/opt/openssl/include
+ /usr/local/include
+ /Library/Developer/CommandLineTools/usr/include/c++/v1
+ /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include
+ /Library/Developer/CommandLineTools/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+graphreader.cpp:87:1: warning: control reaches end of non-void function [-Wreturn-type]
+}
+^
+In file included from graphreader.cpp:5:
+./include/helper.h:36:15: warning: unused function 'double_equals' [-Wunused-function]
+  static bool double_equals(double a, double b, double epsilon = 0.00001)
+              ^
+./include/helper.h:41:17: warning: unused function 'point_distance' [-Wunused-function]
+  static double point_distance(double x1 , double x2, double y1, double y2){
+                ^
+3 warnings generated.
+ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.14.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -disable-free -disable-llvm-verifier -discard-value-names -main-file-name edge.cpp -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.14 -target-cpu skylake -target-feature +sse2 -target-feature +cx16 -target-feature +sahf -target-feature -tbm -target-feature -avx512ifma -target-feature -sha -target-feature -gfni -target-feature -fma4 -target-feature -vpclmulqdq -target-feature +prfchw -target-feature +bmi2 -target-feature -cldemote -target-feature +fsgsbase -target-feature -ptwrite -target-feature +xsavec -target-feature +popcnt -target-feature +aes -target-feature -avx512bitalg -target-feature -movdiri -target-feature +xsaves -target-feature -avx512er -target-feature -avx512vnni -target-feature -avx512vpopcntdq -target-feature -pconfig -target-feature -clwb -target-feature -avx512f -target-feature -clzero -target-feature -pku -target-feature +mmx -target-feature -lwp -target-feature -rdpid -target-feature -xop -target-feature +rdseed -target-feature -waitpkg -target-feature -movdir64b -target-feature -sse4a -target-feature -avx512bw -target-feature +clflushopt -target-feature +xsave -target-feature -avx512vbmi2 -target-feature -avx512vl -target-feature +invpcid -target-feature -avx512cd -target-feature +avx -target-feature -vaes -target-feature -rtm -target-feature +fma -target-feature +bmi -target-feature +rdrnd -target-feature -mwaitx -target-feature +sse4.1 -target-feature +sse4.2 -target-feature +avx2 -target-feature -wbnoinvd -target-feature +sse -target-feature +lzcnt -target-feature +pclmul -target-feature -prefetchwt1 -target-feature +f16c -target-feature +ssse3 -target-feature +sgx -target-feature -shstk -target-feature +cmov -target-feature -avx512vbmi -target-feature +movbe -target-feature +xsaveopt -target-feature -avx512dq -target-feature +adx -target-feature -avx512pf -target-feature +sse3 -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=lldb -target-linker-version 450.3 -v -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -I /usr/local/opt/openssl/include -I/usr/local/include -stdlib=libc++ -O3 -Wall -Wno-atomic-implicit-seq-cst -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-quoted-include-in-framework-header -std=c++11 -fdeprecated-macro -fdebug-compilation-dir /Users/niklas/develop/uni/osmfapra/server/src -ferror-limit 19 -fmessage-length 0 -pthread -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.14.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -vectorize-loops -vectorize-slp -o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/edge-efbd2b.o -x c++ edge.cpp
+clang -cc1 version 10.0.1 (clang-1001.0.46.4) default target x86_64-apple-darwin18.6.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ ./include
+ ../libs/osmpbf/osmpbf/include
+ ../libs/osmpbf
+ .
+ ../libs/Simple-Web-Server
+ /usr/local/opt/openssl/include
+ /usr/local/include
+ /Library/Developer/CommandLineTools/usr/include/c++/v1
+ /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include
+ /Library/Developer/CommandLineTools/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.14.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -disable-free -disable-llvm-verifier -discard-value-names -main-file-name node.cpp -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.14 -target-cpu skylake -target-feature +sse2 -target-feature +cx16 -target-feature +sahf -target-feature -tbm -target-feature -avx512ifma -target-feature -sha -target-feature -gfni -target-feature -fma4 -target-feature -vpclmulqdq -target-feature +prfchw -target-feature +bmi2 -target-feature -cldemote -target-feature +fsgsbase -target-feature -ptwrite -target-feature +xsavec -target-feature +popcnt -target-feature +aes -target-feature -avx512bitalg -target-feature -movdiri -target-feature +xsaves -target-feature -avx512er -target-feature -avx512vnni -target-feature -avx512vpopcntdq -target-feature -pconfig -target-feature -clwb -target-feature -avx512f -target-feature -clzero -target-feature -pku -target-feature +mmx -target-feature -lwp -target-feature -rdpid -target-feature -xop -target-feature +rdseed -target-feature -waitpkg -target-feature -movdir64b -target-feature -sse4a -target-feature -avx512bw -target-feature +clflushopt -target-feature +xsave -target-feature -avx512vbmi2 -target-feature -avx512vl -target-feature +invpcid -target-feature -avx512cd -target-feature +avx -target-feature -vaes -target-feature -rtm -target-feature +fma -target-feature +bmi -target-feature +rdrnd -target-feature -mwaitx -target-feature +sse4.1 -target-feature +sse4.2 -target-feature +avx2 -target-feature -wbnoinvd -target-feature +sse -target-feature +lzcnt -target-feature +pclmul -target-feature -prefetchwt1 -target-feature +f16c -target-feature +ssse3 -target-feature +sgx -target-feature -shstk -target-feature +cmov -target-feature -avx512vbmi -target-feature +movbe -target-feature +xsaveopt -target-feature -avx512dq -target-feature +adx -target-feature -avx512pf -target-feature +sse3 -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=lldb -target-linker-version 450.3 -v -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -I /usr/local/opt/openssl/include -I/usr/local/include -stdlib=libc++ -O3 -Wall -Wno-atomic-implicit-seq-cst -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-quoted-include-in-framework-header -std=c++11 -fdeprecated-macro -fdebug-compilation-dir /Users/niklas/develop/uni/osmfapra/server/src -ferror-limit 19 -fmessage-length 0 -pthread -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.14.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -vectorize-loops -vectorize-slp -o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/node-60cee8.o -x c++ node.cpp
+clang -cc1 version 10.0.1 (clang-1001.0.46.4) default target x86_64-apple-darwin18.6.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ ./include
+ ../libs/osmpbf/osmpbf/include
+ ../libs/osmpbf
+ .
+ ../libs/Simple-Web-Server
+ /usr/local/opt/openssl/include
+ /usr/local/include
+ /Library/Developer/CommandLineTools/usr/include/c++/v1
+ /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include
+ /Library/Developer/CommandLineTools/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.14.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -disable-free -disable-llvm-verifier -discard-value-names -main-file-name webserver.cpp -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.14 -target-cpu skylake -target-feature +sse2 -target-feature +cx16 -target-feature +sahf -target-feature -tbm -target-feature -avx512ifma -target-feature -sha -target-feature -gfni -target-feature -fma4 -target-feature -vpclmulqdq -target-feature +prfchw -target-feature +bmi2 -target-feature -cldemote -target-feature +fsgsbase -target-feature -ptwrite -target-feature +xsavec -target-feature +popcnt -target-feature +aes -target-feature -avx512bitalg -target-feature -movdiri -target-feature +xsaves -target-feature -avx512er -target-feature -avx512vnni -target-feature -avx512vpopcntdq -target-feature -pconfig -target-feature -clwb -target-feature -avx512f -target-feature -clzero -target-feature -pku -target-feature +mmx -target-feature -lwp -target-feature -rdpid -target-feature -xop -target-feature +rdseed -target-feature -waitpkg -target-feature -movdir64b -target-feature -sse4a -target-feature -avx512bw -target-feature +clflushopt -target-feature +xsave -target-feature -avx512vbmi2 -target-feature -avx512vl -target-feature +invpcid -target-feature -avx512cd -target-feature +avx -target-feature -vaes -target-feature -rtm -target-feature +fma -target-feature +bmi -target-feature +rdrnd -target-feature -mwaitx -target-feature +sse4.1 -target-feature +sse4.2 -target-feature +avx2 -target-feature -wbnoinvd -target-feature +sse -target-feature +lzcnt -target-feature +pclmul -target-feature -prefetchwt1 -target-feature +f16c -target-feature +ssse3 -target-feature +sgx -target-feature -shstk -target-feature +cmov -target-feature -avx512vbmi -target-feature +movbe -target-feature +xsaveopt -target-feature -avx512dq -target-feature +adx -target-feature -avx512pf -target-feature +sse3 -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=lldb -target-linker-version 450.3 -v -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -I /usr/local/opt/openssl/include -I/usr/local/include -stdlib=libc++ -O3 -Wall -Wno-atomic-implicit-seq-cst -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-quoted-include-in-framework-header -std=c++11 -fdeprecated-macro -fdebug-compilation-dir /Users/niklas/develop/uni/osmfapra/server/src -ferror-limit 19 -fmessage-length 0 -pthread -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.14.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -vectorize-loops -vectorize-slp -o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/webserver-76f222.o -x c++ webserver.cpp
+clang -cc1 version 10.0.1 (clang-1001.0.46.4) default target x86_64-apple-darwin18.6.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ ./include
+ ../libs/osmpbf/osmpbf/include
+ ../libs/osmpbf
+ .
+ ../libs/Simple-Web-Server
+ /usr/local/opt/openssl/include
+ /usr/local/include
+ /Library/Developer/CommandLineTools/usr/include/c++/v1
+ /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include
+ /Library/Developer/CommandLineTools/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+In file included from webserver.cpp:3:
+In file included from ./include/search.h:5:
+./include/helper.h:36:15: warning: unused function 'double_equals' [-Wunused-function]
+  static bool double_equals(double a, double b, double epsilon = 0.00001)
+              ^
+./include/helper.h:41:17: warning: unused function 'point_distance' [-Wunused-function]
+  static double point_distance(double x1 , double x2, double y1, double y2){
+                ^
+2 warnings generated.
+ "/Library/Developer/CommandLineTools/usr/bin/clang" -cc1 -triple x86_64-apple-macosx10.14.0 -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -disable-free -disable-llvm-verifier -discard-value-names -main-file-name search.cpp -mrelocation-model pic -pic-level 2 -mthread-model posix -mdisable-fp-elim -fno-strict-return -masm-verbose -munwind-tables -target-sdk-version=10.14 -target-cpu skylake -target-feature +sse2 -target-feature +cx16 -target-feature +sahf -target-feature -tbm -target-feature -avx512ifma -target-feature -sha -target-feature -gfni -target-feature -fma4 -target-feature -vpclmulqdq -target-feature +prfchw -target-feature +bmi2 -target-feature -cldemote -target-feature +fsgsbase -target-feature -ptwrite -target-feature +xsavec -target-feature +popcnt -target-feature +aes -target-feature -avx512bitalg -target-feature -movdiri -target-feature +xsaves -target-feature -avx512er -target-feature -avx512vnni -target-feature -avx512vpopcntdq -target-feature -pconfig -target-feature -clwb -target-feature -avx512f -target-feature -clzero -target-feature -pku -target-feature +mmx -target-feature -lwp -target-feature -rdpid -target-feature -xop -target-feature +rdseed -target-feature -waitpkg -target-feature -movdir64b -target-feature -sse4a -target-feature -avx512bw -target-feature +clflushopt -target-feature +xsave -target-feature -avx512vbmi2 -target-feature -avx512vl -target-feature +invpcid -target-feature -avx512cd -target-feature +avx -target-feature -vaes -target-feature -rtm -target-feature +fma -target-feature +bmi -target-feature +rdrnd -target-feature -mwaitx -target-feature +sse4.1 -target-feature +sse4.2 -target-feature +avx2 -target-feature -wbnoinvd -target-feature +sse -target-feature +lzcnt -target-feature +pclmul -target-feature -prefetchwt1 -target-feature +f16c -target-feature +ssse3 -target-feature +sgx -target-feature -shstk -target-feature +cmov -target-feature -avx512vbmi -target-feature +movbe -target-feature +xsaveopt -target-feature -avx512dq -target-feature +adx -target-feature -avx512pf -target-feature +sse3 -dwarf-column-info -debug-info-kind=standalone -dwarf-version=4 -debugger-tuning=lldb -target-linker-version 450.3 -v -resource-dir /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -I ./include/ -I ../libs/osmpbf/osmpbf/include -I ../libs/osmpbf -I ./ -I ../libs/Simple-Web-Server/ -I /usr/local/opt/openssl/include -I/usr/local/include -stdlib=libc++ -O3 -Wall -Wno-atomic-implicit-seq-cst -Wno-framework-include-private-from-public -Wno-atimport-in-framework-header -Wno-quoted-include-in-framework-header -std=c++11 -fdeprecated-macro -fdebug-compilation-dir /Users/niklas/develop/uni/osmfapra/server/src -ferror-limit 19 -fmessage-length 0 -pthread -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fobjc-runtime=macosx-10.14.0 -fcxx-exceptions -fexceptions -fmax-type-align=16 -fdiagnostics-show-option -vectorize-loops -vectorize-slp -o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/search-556b34.o -x c++ search.cpp
+clang -cc1 version 10.0.1 (clang-1001.0.46.4) default target x86_64-apple-darwin18.6.0
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include/c++/v1"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/local/include"
+ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/Library/Frameworks"
+#include "..." search starts here:
+#include <...> search starts here:
+ ./include
+ ../libs/osmpbf/osmpbf/include
+ ../libs/osmpbf
+ .
+ ../libs/Simple-Web-Server
+ /usr/local/opt/openssl/include
+ /usr/local/include
+ /Library/Developer/CommandLineTools/usr/include/c++/v1
+ /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/include
+ /Library/Developer/CommandLineTools/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include
+ /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks (framework directory)
+End of search list.
+ "/Library/Developer/CommandLineTools/usr/bin/ld" -demangle -lto_library /Library/Developer/CommandLineTools/usr/lib/libLTO.dylib -dynamic -arch x86_64 -macosx_version_min 10.14.0 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -o main.out -L./../libs/osmpbf/build/osmpbf/ -L/usr/local/opt/openssl/lib /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/main-b96957.o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/graphreader-60ca63.o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/edge-efbd2b.o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/node-60cee8.o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/webserver-76f222.o /var/folders/33/zp3mn25j019ghwnzr07j6cz40000gn/T/search-556b34.o -lssl -losmpbf -lprotobuf -lz -lboost_thread-mt -lboost_system -lboost_filesystem -L/usr/local/lib -lc++ -lSystem /Library/Developer/CommandLineTools/usr/lib/clang/10.0.1/lib/darwin/libclang_rt.osx.a
+Undefined symbols for architecture x86_64:
+  "_BIO_ctrl", referenced from:
+      boost::asio::ssl::detail::engine::map_error_code(boost::system::error_code&) const in webserver-76f222.o
+  "_BIO_ctrl_pending", referenced from:
+      boost::asio::ssl::detail::engine::perform(int (boost::asio::ssl::detail::engine::*)(void*, unsigned long), void*, unsigned long, boost::system::error_code&, unsigned long*) in webserver-76f222.o
+  "_BIO_free", referenced from:
+      boost::asio::ssl::detail::stream_core::stream_core(ssl_ctx_st*, boost::asio::io_context&) in webserver-76f222.o
+      SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Connection::~Connection() in webserver-76f222.o
+  "_BIO_new_bio_pair", referenced from:
+      boost::asio::ssl::detail::engine::engine(ssl_ctx_st*) in webserver-76f222.o
+  "_BIO_read", referenced from:
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::handshake_op, SimpleWeb::Server<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::accept()::'lambda'(boost::system::error_code const&)::operator()(boost::system::error_code const&) const::'lambda'(boost::system::error_code const&)>::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_until_delim_string_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&)::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_exactly_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&)::'lambda'(boost::system::error_code const&, unsigned long)::operator()(boost::system::error_code const&, unsigned long) const::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::write_op<boost::asio::const_buffers_1>, boost::asio::detail::write_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::const_buffers_1, boost::asio::const_buffer const*, boost::asio::detail::transfer_all_t, boost::asio::detail::write_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_all_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Response::send_on_delete(std::__1::function<void (boost::system::error_code const&)> const&)::'lambda'(boost::system::error_code const&, unsigned long)> > >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_until_delim_string_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read_chunked_transfer_encoded(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&, std::__1::shared_ptr<boost::asio::basic_streambuf<std::__1::allocator<char> > > const&)::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_exactly_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read_chunked_transfer_encoded(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&, std::__1::shared_ptr<boost::asio::basic_streambuf<std::__1::allocator<char> > > const&)::'lambda'(boost::system::error_code const&, unsigned long)::operator()(boost::system::error_code const&, unsigned long) const::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::write_op<boost::asio::const_buffers_1>, boost::asio::detail::write_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::const_buffers_1, boost::asio::const_buffer const*, boost::asio::detail::transfer_all_t, boost::asio::detail::write_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_all_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Response::send_from_queue()::'lambda'(boost::system::error_code const&, unsigned long)> > >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      ...
+  "_BIO_write", referenced from:
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::handshake_op, SimpleWeb::Server<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::accept()::'lambda'(boost::system::error_code const&)::operator()(boost::system::error_code const&) const::'lambda'(boost::system::error_code const&)>::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_until_delim_string_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&)::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_exactly_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&)::'lambda'(boost::system::error_code const&, unsigned long)::operator()(boost::system::error_code const&, unsigned long) const::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::write_op<boost::asio::const_buffers_1>, boost::asio::detail::write_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::const_buffers_1, boost::asio::const_buffer const*, boost::asio::detail::transfer_all_t, boost::asio::detail::write_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_all_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Response::send_on_delete(std::__1::function<void (boost::system::error_code const&)> const&)::'lambda'(boost::system::error_code const&, unsigned long)> > >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_until_delim_string_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read_chunked_transfer_encoded(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&, std::__1::shared_ptr<boost::asio::basic_streambuf<std::__1::allocator<char> > > const&)::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::read_op<boost::asio::mutable_buffers_1>, boost::asio::detail::read_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_exactly_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::read_chunked_transfer_encoded(std::__1::shared_ptr<SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Session> const&, std::__1::shared_ptr<boost::asio::basic_streambuf<std::__1::allocator<char> > > const&)::'lambda'(boost::system::error_code const&, unsigned long)::operator()(boost::system::error_code const&, unsigned long) const::'lambda'(boost::system::error_code const&, unsigned long)> >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      boost::asio::ssl::detail::io_op<boost::asio::basic_stream_socket<boost::asio::ip::tcp>, boost::asio::ssl::detail::write_op<boost::asio::const_buffers_1>, boost::asio::detail::write_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::const_buffers_1, boost::asio::const_buffer const*, boost::asio::detail::transfer_all_t, boost::asio::detail::write_dynbuf_op<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> >, boost::asio::basic_streambuf_ref<std::__1::allocator<char> >, boost::asio::detail::transfer_all_t, SimpleWeb::ServerBase<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Response::send_from_queue()::'lambda'(boost::system::error_code const&, unsigned long)> > >::operator()(boost::system::error_code, unsigned long, int) in webserver-76f222.o
+      ...
+  "_CONF_modules_unload", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_CRYPTO_cleanup_all_ex_data", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_CRYPTO_num_locks", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::do_init() in webserver-76f222.o
+  "_CRYPTO_set_locking_callback", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::do_init() in webserver-76f222.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_ENGINE_cleanup", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_ERR_clear_error", referenced from:
+      SimpleWeb::Server<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Server(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) in webserver-76f222.o
+      boost::asio::ssl::context::use_certificate_chain_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) in webserver-76f222.o
+      boost::asio::ssl::context::load_verify_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) in webserver-76f222.o
+      boost::asio::ssl::context::context(boost::asio::ssl::context_base::method) in webserver-76f222.o
+      boost::asio::ssl::detail::engine::perform(int (boost::asio::ssl::detail::engine::*)(void*, unsigned long), void*, unsigned long, boost::system::error_code&, unsigned long*) in webserver-76f222.o
+  "_ERR_free_strings", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_ERR_get_error", referenced from:
+      SimpleWeb::Server<boost::asio::ssl::stream<boost::asio::basic_stream_socket<boost::asio::ip::tcp> > >::Server(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) in webserver-76f222.o
+      boost::asio::ssl::context::use_certificate_chain_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) in webserver-76f222.o
+      boost::asio::ssl::context::load_verify_file(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&) in webserver-76f222.o
+      boost::asio::ssl::context::context(boost::asio::ssl::context_base::method) in webserver-76f222.o
+      boost::asio::ssl::detail::engine::engine(ssl_ctx_st*) in webserver-76f222.o
+      boost::asio::ssl::detail::engine::perform(int (boost::asio::ssl::detail::engine::*)(void*, unsigned long), void*, unsigned long, boost::system::error_code&, unsigned long*) in webserver-76f222.o
+  "_ERR_reason_error_string", referenced from:
+      boost::asio::error::detail::ssl_category::message(int) const in main-b96957.o
+      boost::asio::error::detail::ssl_category::message(int) const in webserver-76f222.o
+  "_ERR_remove_thread_state", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_EVP_cleanup", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::~do_init() in webserver-76f222.o
+  "_OPENSSL_add_all_algorithms_noconf", referenced from:
+      boost::asio::ssl::detail::openssl_init_base::do_init::do_init() in main-b96957.o
+      boost::asio::ssl::detail::openssl_init_base::do_init::do_init() in webserver-76f222.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [default] Error 1

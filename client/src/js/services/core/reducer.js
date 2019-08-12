@@ -18,6 +18,8 @@ export default function reducer(core = {}, action){
             return Object.assign({}, core, {notifications: notifications});
         case 'GENERATE_SHARE_LINK':
             return Object.assign({}, core, {sharelink: action.sharelink})
+        case 'GET_ROUTE_BY_COORDINATE':
+            return Object.assign({}, core, {routeonrequest: action.routeonrequest})
         default:
             return core;
     }

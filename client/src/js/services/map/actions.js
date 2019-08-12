@@ -16,3 +16,10 @@ export function sendLocation(){
         type: "SEND_LOCATION"
     }
 }
+
+export function storeRoute(route){
+    return{
+        type: "STORE_ROUTE",
+        payload: route
+    }
+}

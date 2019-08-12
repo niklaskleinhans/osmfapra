@@ -18,7 +18,7 @@ function fillNotification(data){
    if (typeof data.sticky !== 'undefined' ) notification.sticky = data.sticky
    if (typeof data.closing !== 'undefined' ) notification.closing = data.closing
    if (typeof data.type !== 'undefined') notification.type = data.type
-   console.log(notification)
+   //console.log(notification)
     
    return notification
 }
@@ -48,6 +48,12 @@ export function removeNotification(key, manual = false){
 export function generateShareLink(){
     return {
         type: 'GENERATE_SHARE_LINK'
+    }
+}
+
+export function getRouteByCoordinate(){
+    return {
+        type: 'GET_ROUTE_BY_COORDINATE'
     }
 }
 

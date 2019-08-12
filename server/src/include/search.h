@@ -10,6 +10,7 @@
 struct Result
 {
   int distance = -1;
+  int pathCost = 0;
   std::vector<Node> path;
 };
 

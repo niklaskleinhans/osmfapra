@@ -19,12 +19,25 @@ class Sidebar extends React.Component{
        this.props.coreActions.generateShareLink()
     }
 
+    calculateRoute(){
+       this.props.coreActions.getRouteByCoordinate()
+    }
+
+    calculateTime(){
+        var timeInMinutes = this.props.pathCost
+        var hours = Math.floor(timeInMinutes / 216000)
+        var minutes = (timeInMinutes- (hours*216000))/3600
+        return hours + " h " + minutes.toFixed(0) + " m"
+    }
+
     render(){
         return(
             <aside> 
             <div>OSM Stuff</div>
             <button onClick={e => this.generateShareLink(e)}>Generate Share Link</button>
             <FilledInput disabled value={this.props.sharelink}/>
+            <button onClick={e => this.calculateRoute(e)}>CalculateRoute</button>
+            {this.props.pathCost ? <h3>{this.calculateTime()}</h3> : null}
             </aside>
         )
     }
@@ -39,7 +52,8 @@ class Sidebar extends React.Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        sharelink: state.core.sharelink
+        sharelink: state.core.sharelink,
+        pathCost : state.map.route.pathCost
 
     }
 };
