@@ -51,7 +51,9 @@ int printGraphStats()
   std::cout << "------Array Check---------" << std::endl;
   std::cout << "[nodecount:nodearraysiz]    => " << "[" <<graph.nodecount << " : " << graph.nodes.size()<< "]" << std::endl;
   std::cout << "[nodecount:offsetarraysize] => " << "[" <<graph.nodecount << " : " << graph.offset.size()<< "]" << std::endl;
+  std::cout << "[nodecount:offsetREVERSEDarraysize] => " << "[" <<graph.nodecount << " : " << graph.offsetReversed.size()<< "]" << std::endl;
   std::cout << "[edecount:edgearraysize]    => " << "[" <<graph.edgecount << " : " << graph.edges.size()<< "]" << std::endl;
+  std::cout << "[edecount:edgeREVERSEDarraysize]    => " << "[" <<graph.edgecount << " : " << graph.edgesReversed.size()<< "]" << std::endl;
   std::cout << "--------------------------" << std::endl;
   std::cout << "\n" << std::endl;
   std::cout << "-------Check Edges--------" << std::endl;
@@ -189,6 +191,7 @@ int main(int argc, char *argv[]){
       if(!(BINARYREAD && readBinary())) GraphReader::read(&graph, argv[1]);
       if(BINARYWRITE) writeBinary();
       
+      /*
       //--------- User interaction ---------//
       bool exit = false;
       while(!exit){
@@ -211,6 +214,8 @@ int main(int argc, char *argv[]){
             break;
       }
     }
+    */
+    runWebserver();
   }
   return 0;
 

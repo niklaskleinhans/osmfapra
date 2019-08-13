@@ -11,8 +11,12 @@ Search::Search(Graph* graph)
 {
   this->graph = graph;
   this->visited = std::vector<bool>(graph->nodes.size(), false);
+  this->visitedReversed = std::vector<bool>(graph->nodes.size(), false);
+  //this->visitedBy = std::vector<std::pair<bool,bool>>(graph->nodes.size(), std::pair<bool,bool>(false,false));
   this->parents = std::vector<int>(graph->nodes.size(), -1);
+  this->parentsReversed = std::vector<int>(graph->nodes.size(), -1);
   this->distances = std::vector<int>(graph->nodes.size(), std::numeric_limits<int>::max());
+  this->distancesReversed = std::vector<int>(graph->nodes.size(), std::numeric_limits<int>::max());
 }
 /**
  * find Node
@@ -106,6 +110,7 @@ void Search::reset(){
 
 void Search::expand(int source, int costs){
   this->visited[source] = true;
+  //this->visitedBy[source] = make_pair(true, get<1>(this->visitedBy[source]));
   this->touch_visited.push_back(source);
   if(this->graph->offset[source] == -1) return;
   for(int i = this->graph->offset[source]; i < this->graph->offset[source+1] ; i++){
@@ -117,12 +122,49 @@ void Search::expand(int source, int costs){
   }
 }
 
+void Search::expandReversed(int source, int costs){
+  this->visitedReversed[source] = true;
+  //this->visitedBy[source] = make_pair(get<0>(this->visitedBy[source]),true);
+  this->touch_visited.push_back(source);
+  if(this->graph->offsetReversed[source] == -1) return;
+  for(int i = this->graph->offsetReversed[source]; i < this->graph->offsetReversed[source+1] ; i++){
+    priorityQueueReversed.push(make_pair((this->graph->edgesReversed[i].cost + costs), this->graph->edgesReversed[i].trgID));
+    if(this->distancesReversed[this->graph->edgesReversed[i].trgID]> this->graph->edgesReversed[i].cost + costs){
+      this->parentsReversed[this->graph->edgesReversed[i].trgID] = i;
+      this->distancesReversed[this->graph->edgesReversed[i].trgID] = this->graph->edgesReversed[i].cost + costs;
+    }
+  }
+}
+
+
+int Search::bestMeetNode(){
+  int bestMeetNode = -1;
+  int currentSmallestDistance = std::numeric_limits<int>::max();
+  for (int i=0; i < this->touch_visited.size() ; i++){
+    if (this->distances[touch_visited[i]] < std::numeric_limits<int>::max() && 
+        this->distancesReversed[touch_visited[i]]< std::numeric_limits<int>::max()){
+      if (this->distances[touch_visited[i]]+ this->distancesReversed[touch_visited[i]] < currentSmallestDistance){
+        currentSmallestDistance = this->distances[touch_visited[i]] + this->distancesReversed[touch_visited[i]];
+        bestMeetNode = touch_visited[i];
+      }
+    }
+  }
+  return bestMeetNode;
+}
+
 void Search::oneToOne(int source, int target, Result* result){
   pair<int,int> current;
+  pair<int,int> currentReversed;
   this->expand(source, 0);
-  while(!this->priorityQueue.empty()){
+  if(!this->visited[target])
+    this->expandReversed(target, 0);
+  while(!this->priorityQueue.empty() && !this->priorityQueueReversed.empty()){
+  //while(!this->priorityQueue.empty()){
+  //while(!this->priorityQueueReversed.empty()){
     current = priorityQueue.top();
-    if (get<1>(current) == target){
+    currentReversed = priorityQueueReversed.top();
+    if (get<1>(current) == target ){
+      std::cout << get<1>(current) << " " << source << std::endl;
       result->distance = get<0>(current);
       int currNode = target;
       result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
@@ -133,9 +175,49 @@ void Search::oneToOne(int source, int target, Result* result){
       }
       break;
     }
+    
+    if (get<1>(currentReversed) == source ){
+      std::cout << "Reveresed: " << get<1>(currentReversed) << " " << source << std::endl;
+      result->distance = get<0>(currentReversed);
+      int currNode = source;
+      result->path.insert(result->path.begin(), this->graph->nodes[source]);
+      while (currNode != target){
+        currNode = this->graph->edgesReversed[this->parentsReversed[currNode]].srcID;
+        result->pathCost = result->pathCost + this->graph->edgesReversed[this->parentsReversed[currNode]].cost;
+        result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      }
+      std::reverse(result->path.begin(), result->path.end());
+      break;
+    }
+    if (this->visitedReversed[get<1>(current)] || this->visited[get<1>(currentReversed)]){
+      int meetNode = this->bestMeetNode();
+      int currNode = meetNode;
+      result->pathCost = this->distancesReversed[currNode];
+      std::vector<Node> path;
+      path.insert(path.begin(), this->graph->nodes[currNode]);
+      while (currNode != target){
+        currNode = this->graph->edgesReversed[this->parentsReversed[currNode]].srcID;
+        //result->pathCost = result->pathCost + this->graph->edgesReversed[this->parentsReversed[currNode]].cost;
+        path.insert(path.begin(), this->graph->nodes[currNode]);
+      }
+      std::reverse(path.begin(), path.end());
+      result->path = path;
+      currNode = meetNode;
+      result->pathCost = result->pathCost + this->distances[currNode]; 
+      while (currNode != source){
+        currNode = this->graph->edges[this->parents[currNode]].srcID;
+        //result->pathCost = result->pathCost + this->graph->edges[this->parents[currNode]].cost;
+        result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      }
+      break;
+    }
+    
     priorityQueue.pop();
+    priorityQueueReversed.pop();
     if(!this->visited[get<1>(current)])
       this->expand(get<1>(current), get<0>(current));
+    if(!this->visitedReversed[get<1>(currentReversed)])
+      this->expandReversed(get<1>(currentReversed), get<0>(currentReversed));
   }
   return;
 }

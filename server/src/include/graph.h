@@ -20,6 +20,8 @@ struct Graph
   std::vector<Edge> edges;
   std::vector<Edge> edgesReversed;
   std::vector<int> offset;
+  std::vector<int> offsetReversed;
+
 
   int findNode(double longitude, double latitude);
   void read(ifstream *in)  { in->read((char *) this, sizeof(Graph));  }  

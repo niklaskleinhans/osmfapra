@@ -15,6 +15,7 @@ struct GraphReader{
   //int read(Graph* out, char * inputFileName, bool verbose, std::map<string, vector<string>> categories);
   static int read(Graph* out, char * inputFileName);
   static int createOffset(Graph* graph);
+  static int createOffsetReversed(Graph* graph);
   static int cleanUpMultiEdges(Graph* graph);
         
 };

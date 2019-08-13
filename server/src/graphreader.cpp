@@ -46,8 +46,47 @@ inline int calculateWeight(float lat1, float lon1, float lat2, float lon2, int m
     return (int) ((100 * distance * 3600)/maxSpeed);
 }
 
+
+
 /*
  * create Offset for outgoing edges
+ * and add cost information to edges
+ * if no outgoing edge exists push back -1
+ */
+int GraphReader::createOffsetReversed(Graph* graph)
+{
+  int current = -1;
+  // go through edges
+  for (int i=0; i < graph->edgecount ; i++)
+  {
+
+    // add costs
+    graph->edgesReversed[i].cost = calculateWeight(graph->nodes[graph->edgesReversed[i].srcID].lat,
+                                            graph->nodes[graph->edgesReversed[i].srcID].lon,
+                                            graph->nodes[graph->edgesReversed[i].trgID].lat,
+                                            graph->nodes[graph->edgesReversed[i].trgID].lon,
+                                            graph->edgesReversed[i].maxSpeed);
+    //check for new srcnode
+    if(graph->edgesReversed[i].srcID != current )
+    {
+        // check if one node doesnt have an outgoing edge
+        // push -1
+        while(graph->edgesReversed[i].srcID > current+1)
+        {
+            graph->offsetReversed.push_back(-1);
+            current++;
+        }
+        //else push the id
+        current ++;
+        graph->offsetReversed.push_back(i);
+        }
+  }
+  return 0;
+}
+
+/*
+ * create Offset for outgoing edges
+ * and add cost information to edges
  * if no outgoing edge exists push back -1
  */
 int GraphReader::createOffset(Graph* graph)
@@ -56,11 +95,13 @@ int GraphReader::createOffset(Graph* graph)
   // go through edges
   for (int i=0; i < graph->edgecount ; i++)
   {
-      graph->edges[i].cost = calculateWeight(graph->nodes[graph->edges[i].srcID].lat,
-                                             graph->nodes[graph->edges[i].srcID].lon,
-                                             graph->nodes[graph->edges[i].trgID].lat,
-                                             graph->nodes[graph->edges[i].trgID].lon,
-                                             graph->edges[i].maxSpeed);
+
+    // add costs
+    graph->edges[i].cost = calculateWeight(graph->nodes[graph->edges[i].srcID].lat,
+                                            graph->nodes[graph->edges[i].srcID].lon,
+                                            graph->nodes[graph->edges[i].trgID].lat,
+                                            graph->nodes[graph->edges[i].trgID].lon,
+                                            graph->edges[i].maxSpeed);
     //check for new srcnode
     if(graph->edges[i].srcID != current )
     {
@@ -76,6 +117,7 @@ int GraphReader::createOffset(Graph* graph)
         graph->offset.push_back(i);
         }
   }
+  createOffsetReversed(graph);
   return 0;
 }
 
@@ -189,7 +231,7 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                                 }
                                 catch(boost::bad_lexical_cast &)
                                 {
-                                    std::cout << "Fehler: " << way.value(i) << std::endl;
+                                    //std::cout << "Fehler: " << way.value(i) << std::endl;
                                 }
                             }
                             if(way.key(i) ==  "highway" )
@@ -240,10 +282,12 @@ int GraphReader::read(Graph* graph, char *inputFileName){
                             if(!oneWayFilter.matches(way))
                             {
                                 graph->edges.push_back(Edge(nodeMap.find(*refIt)->second, nodeMap.find(srcID)->second, maxSpeed));
+                                graph->edgesReversed.push_back(Edge(nodeMap.find(srcID)->second, nodeMap.find(*refIt)->second,maxSpeed));
                                 graph->edgecount++;
                             }
                             // std::cout << "[" << srcID << " : " << *refIt  << " : " << nodeMap.find(*refIt)->second << "]" << std::endl;
                             graph->edges.push_back(Edge(nodeMap.find(srcID)->second, nodeMap.find(*refIt)->second, maxSpeed));
+                            graph->edgesReversed.push_back(Edge(nodeMap.find(*refIt)->second, nodeMap.find(srcID)->second, maxSpeed));
                             graph->edgecount++;
                             //std::cout << "added Edge. Edgecount: " << graph->edgecount << std::endl;
                             // set target node to new src node for next iteration
@@ -283,6 +327,7 @@ int GraphReader::read(Graph* graph, char *inputFileName){
     graph->durationImport = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     // Sort and create Offset
     std::sort(graph->edges.begin(), graph->edges.end(), sort_operator());
+    std::sort(graph->edgesReversed.begin(), graph->edgesReversed.end(), sort_operator());
     //GraphReader::cleanUpMultiEdges(graph);
     GraphReader::createOffset(graph);
     
