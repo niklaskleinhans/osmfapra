@@ -1,4 +1,5 @@
 import * as mqttActions from '../mqtt/actions'
+import * as helpers from '../../helpers'
 
 const mapMiddleware = (function(){
     return store => next => action => {
@@ -20,6 +21,15 @@ const mapMiddleware = (function(){
                 error => alert(error.message));
                 next(action)
                 break;
+            case 'UPDATE_COORDINATES_FRIEND':
+                if(store.getState().map.friendCoordinates){
+                    // check if the new friend is less then 5km away from old position. Instead ins an unrealistic update
+                    if(helpers.pointDistance(action.payload.position, store.getState().map.friendCoordinates)> 5000){
+                        action.payload.position=store.getState().map.friendCoordinates
+                    }
+                }
+                next(action)
+                break
             
             default:
                 return next(action)

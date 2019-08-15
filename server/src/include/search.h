@@ -11,6 +11,7 @@ struct Result
 {
   int distance = -1;
   int pathCost = 0;
+  long timeForSearch = 0;
   std::vector<Node> path;
 };
 
@@ -35,9 +36,10 @@ struct Search
 
   int bestMeetNode();
   void oneToOne(int source, int target, Result* result);
+  void oneToOneBidirectional(int source, int target, Result* result);
   void getPath(int source,int currNode, vector<Node>* path);
-  void expand(int source, int costs);
-  void expandReversed(int source, int costs);
+  void expand(int source, int costs, bool clearPrio);
+  void expandReversed(int source, int costs, bool clearPrio);
   void reset();
 
   Search(Graph* graph);

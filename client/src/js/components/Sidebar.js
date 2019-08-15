@@ -38,6 +38,7 @@ class Sidebar extends React.Component{
             <FilledInput disabled value={this.props.sharelink}/>
             <button onClick={e => this.calculateRoute(e)}>CalculateRoute</button>
             {this.props.pathCost ? <h3>{this.calculateTime()}</h3> : null}
+            {this.props.calculationTime ? <h3>{(this.props.calculationTime/1000000).toFixed(2)}</h3> : null}
             </aside>
         )
     }
@@ -53,7 +54,8 @@ class Sidebar extends React.Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         sharelink: state.core.sharelink,
-        pathCost : state.map.route.pathCost
+        pathCost : state.map.route.pathCost,
+        calculationTime : state.map.route.timeForSearch
 
     }
 };

@@ -130,9 +130,12 @@ void Webserver::run_server(Graph *graph){
     Result result;
     if ( srcIDX != -1 && trgIDX !=-1){
       Search search(graph);
-      search.oneToOne(srcIDX, trgIDX, &result);
+
+      search.oneToOneBidirectional(srcIDX, trgIDX, &result);
+    
       pt.add_child("nodes", path_to_ptree(result.path));
       pt.put("pathCost", result.pathCost);
+      pt.put("timeForSearch", result.timeForSearch);
       pt.put("error", false);
     } else{
       pt.put("error", true);

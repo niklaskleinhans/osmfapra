@@ -57,6 +57,7 @@ int printGraphStats()
   std::cout << "--------------------------" << std::endl;
   std::cout << "\n" << std::endl;
   std::cout << "-------Check Edges--------" << std::endl;
+  
   Edge e;
   int sink =0;
   int currentEdgeID=0;
@@ -64,55 +65,56 @@ int printGraphStats()
   boost::random::mt19937 gen;
   std::vector<int> edgeCostValues;
   std::vector<int> maxSpeedValues;
-  
-  for (int m=0; m< graph.nodecount; ++m)
-  {
 
-    currentEdgeID=graph.offset[m];
-    edgeCostValues.push_back(graph.edges[currentEdgeID].cost);
-    maxSpeedValues.push_back(graph.edges[currentEdgeID].maxSpeed);
-    // count nodes with no outgoing edges
-    if( currentEdgeID == -1) 
+    for (int m=0; m< graph.nodecount; ++m)
     {
-      //std::cout<< "[" << m << ":" << graph.nodes[m].lon << ":" << graph.nodes[m].lat << std::endl;
-      sink++;
-      continue;
-    }
-    // check if the returned id off the offset for nodeid m
-    // equals a edge entry of the edge array with 
-    // srcID = requested nodeid m
-    // Just to check if the offset array works fine
-    if(m != graph.edges[currentEdgeID].srcID){
-        std::cout << "EDGES for ID: " << m << " are wrong " << "found Edge for ID: " << graph.edges[currentEdgeID].srcID  << std::endl;
-        std::cout << "Nodeinformation fpr ID: " << "lat: " << graph.nodes[m].lat << " lon: " << graph.nodes[m].lon << std::endl;
-        std::cout << "Offset returns for ID: " << m << " : " << graph.offset[m] << std::endl;
-    } 
-    // check if the edge array is sorted correctly
-    if(m >= 1 && m-1 != graph.edges[graph.offset[m]].srcID-1)
-    {
-      std::cout << "previous EDGES for ID: " << m << " are wrong"<< std::endl;
-    }
 
-    // check if all of the edges just exists once
-    int edgeIteration = currentEdgeID;
-    std::vector<int> existingtargets;
-    while(graph.edges[edgeIteration].srcID == graph.edges[currentEdgeID].srcID)
-    {
-      if(std::find(existingtargets.begin(), existingtargets.end(), graph.edges[edgeIteration].trgID) != existingtargets.end())
+      currentEdgeID=graph.offset[m];
+      edgeCostValues.push_back(graph.edges[currentEdgeID].cost);
+      maxSpeedValues.push_back(graph.edges[currentEdgeID].maxSpeed);
+      // count nodes with no outgoing edges
+      if( currentEdgeID == -1) 
       {
-        sumOfMultiEdges++;
-        //std::cout << "Found Edge again: " << edgeIteration << " : "<< m << " : " << graph.edges[edgeIteration].trgID  << std::endl;
-      }else
-      {
-        existingtargets.push_back(graph.edges[edgeIteration].trgID);
+        //std::cout<< "[" << m << ":" << graph.nodes[m].lon << ":" << graph.nodes[m].lat << std::endl;
+        sink++;
+        continue;
       }
-        edgeIteration++;
-    }
-  }
+      // check if the returned id off the offset for nodeid m
+      // equals a edge entry of the edge array with 
+      // srcID = requested nodeid m
+      // Just to check if the offset array works fine
+      if(m != graph.edges[currentEdgeID].srcID){
+          std::cout << "EDGES for ID: " << m << " are wrong " << "found Edge for ID: " << graph.edges[currentEdgeID].srcID  << std::endl;
+          std::cout << "Nodeinformation fpr ID: " << "lat: " << graph.nodes[m].lat << " lon: " << graph.nodes[m].lon << std::endl;
+          std::cout << "Offset returns for ID: " << m << " : " << graph.offset[m] << std::endl;
+      } 
+      // check if the edge array is sorted correctly
+      if(m >= 1 && m-1 != graph.edges[graph.offset[m]].srcID-1)
+      {
+        std::cout << "previous EDGES for ID: " << m << " are wrong"<< std::endl;
+      }
 
+      // check if all of the edges just exists once
+      int edgeIteration = currentEdgeID;
+      std::vector<int> existingtargets;
+      while(graph.edges[edgeIteration].srcID == graph.edges[currentEdgeID].srcID)
+      {
+        if(std::find(existingtargets.begin(), existingtargets.end(), graph.edges[edgeIteration].trgID) != existingtargets.end())
+        {
+          sumOfMultiEdges++;
+          //std::cout << "Found Edge again: " << edgeIteration << " : "<< m << " : " << graph.edges[edgeIteration].trgID  << std::endl;
+        }else
+        {
+          existingtargets.push_back(graph.edges[edgeIteration].trgID);
+        }
+          edgeIteration++;
+      }
+    }
+  
   std::cout << "Multi Edge Count: " << sumOfMultiEdges << std::endl;
   std::cout << "Sink Point Count: " << sink<< std::endl;
   std::cout << "--------------------------" << std::endl;
+  
   std::sort(maxSpeedValues.begin(), maxSpeedValues.end());
   auto uniquemaxSpeedList = std::unique(maxSpeedValues.begin(), maxSpeedValues.end());
   maxSpeedValues.erase(uniquemaxSpeedList, maxSpeedValues.end());
@@ -122,6 +124,7 @@ int printGraphStats()
   }
   std::cout << "\n";
   std::cout << "--------------------------" << std::endl;
+  
   return 0;
 }
 
@@ -191,7 +194,7 @@ int main(int argc, char *argv[]){
       if(!(BINARYREAD && readBinary())) GraphReader::read(&graph, argv[1]);
       if(BINARYWRITE) writeBinary();
       
-      /*
+     /* 
       //--------- User interaction ---------//
       bool exit = false;
       while(!exit){
@@ -213,8 +216,8 @@ int main(int argc, char *argv[]){
           default: std::cout<<"Please select one of the Options in the List"<<std::endl;
             break;
       }
-    }
-    */
+    }*/
+    //printGraphStats();
     runWebserver();
   }
   return 0;

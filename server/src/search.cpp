@@ -34,7 +34,9 @@ int Search::findNode(Graph *graph, double longitude, double latitude)
       nearestNode = i;
         }
     if (double_equals(graph->nodes[i].lat, latitude) && double_equals(graph->nodes[i].lon, longitude)){
-      std::cout << "found Node" << std::endl;
+      std::cout << "found exact Node: "<< i << " [" 
+      << graph->nodes[i].lon << ", "
+      << graph->nodes[i].lat << "]" << std::endl;
       return i;
     }
   }
@@ -108,13 +110,14 @@ void Search::reset(){
   }
 }
 
-void Search::expand(int source, int costs){
+void Search::expand(int source, int costs, bool clearPrio=false){
   this->visited[source] = true;
   //this->visitedBy[source] = make_pair(true, get<1>(this->visitedBy[source]));
   this->touch_visited.push_back(source);
   if(this->graph->offset[source] == -1) return;
   for(int i = this->graph->offset[source]; i < this->graph->offset[source+1] ; i++){
-    priorityQueue.push(make_pair((this->graph->edges[i].cost + costs), this->graph->edges[i].trgID));
+    if (!clearPrio)
+      priorityQueue.push(make_pair((this->graph->edges[i].cost + costs), this->graph->edges[i].trgID));
     if(this->distances[this->graph->edges[i].trgID]> this->graph->edges[i].cost + costs){
       this->parents[this->graph->edges[i].trgID] = i;
       this->distances[this->graph->edges[i].trgID] = this->graph->edges[i].cost + costs;
@@ -122,13 +125,14 @@ void Search::expand(int source, int costs){
   }
 }
 
-void Search::expandReversed(int source, int costs){
+void Search::expandReversed(int source, int costs, bool clearPrio=false){
   this->visitedReversed[source] = true;
   //this->visitedBy[source] = make_pair(get<0>(this->visitedBy[source]),true);
   this->touch_visited.push_back(source);
   if(this->graph->offsetReversed[source] == -1) return;
   for(int i = this->graph->offsetReversed[source]; i < this->graph->offsetReversed[source+1] ; i++){
-    priorityQueueReversed.push(make_pair((this->graph->edgesReversed[i].cost + costs), this->graph->edgesReversed[i].trgID));
+    if (!clearPrio) 
+      priorityQueueReversed.push(make_pair((this->graph->edgesReversed[i].cost + costs), this->graph->edgesReversed[i].trgID));
     if(this->distancesReversed[this->graph->edgesReversed[i].trgID]> this->graph->edgesReversed[i].cost + costs){
       this->parentsReversed[this->graph->edgesReversed[i].trgID] = i;
       this->distancesReversed[this->graph->edgesReversed[i].trgID] = this->graph->edgesReversed[i].cost + costs;
@@ -153,6 +157,36 @@ int Search::bestMeetNode(){
 }
 
 void Search::oneToOne(int source, int target, Result* result){
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+  pair<int,int> current;
+  this->expand(source, 0);
+  while(!this->priorityQueue.empty()){
+    current = priorityQueue.top();
+    if (get<1>(current) == target){
+      result->distance = get<0>(current);
+      int currNode = target;
+      result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      while (currNode != source){
+        currNode = this->graph->edges[this->parents[currNode]].srcID;
+        result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      }
+      t2 = std::chrono::high_resolution_clock::now();
+      result->timeForSearch = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+      break;
+    }
+    priorityQueue.pop();
+    if(!this->visited[get<1>(current)])
+      this->expand(get<1>(current), get<0>(current));
+  }
+  t2 = std::chrono::high_resolution_clock::now();
+  result->timeForSearch = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+  return;
+}
+
+void Search::oneToOneBidirectional(int source, int target, Result* result){
+  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
   pair<int,int> current;
   pair<int,int> currentReversed;
   this->expand(source, 0);
@@ -163,39 +197,31 @@ void Search::oneToOne(int source, int target, Result* result){
   //while(!this->priorityQueueReversed.empty()){
     current = priorityQueue.top();
     currentReversed = priorityQueueReversed.top();
-    if (get<1>(current) == target ){
-      std::cout << get<1>(current) << " " << source << std::endl;
-      result->distance = get<0>(current);
-      int currNode = target;
-      result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
-      while (currNode != source){
-        currNode = this->graph->edges[this->parents[currNode]].srcID;
-        result->pathCost = result->pathCost + this->graph->edges[this->parents[currNode]].cost;
-        result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
-      }
-      break;
-    }
-    
-    if (get<1>(currentReversed) == source ){
-      std::cout << "Reveresed: " << get<1>(currentReversed) << " " << source << std::endl;
-      result->distance = get<0>(currentReversed);
-      int currNode = source;
-      result->path.insert(result->path.begin(), this->graph->nodes[source]);
-      while (currNode != target){
-        currNode = this->graph->edgesReversed[this->parentsReversed[currNode]].srcID;
-        result->pathCost = result->pathCost + this->graph->edgesReversed[this->parentsReversed[currNode]].cost;
-        result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
-      }
-      std::reverse(result->path.begin(), result->path.end());
-      break;
-    }
     if (this->visitedReversed[get<1>(current)] || this->visited[get<1>(currentReversed)]){
+      while(!this->priorityQueue.empty()){ 
+        //std::cout<< "prio not empty" << std::endl;
+        current = priorityQueue.top();
+        priorityQueue.pop();
+        if(!this->visited[get<1>(current)])
+          this->expand(get<1>(current), get<0>(current),true);
+      }
+
+      while(!this->priorityQueueReversed.empty()){
+        //std::cout<< "prioRev not empty" << std::endl;
+        currentReversed = priorityQueueReversed.top();
+        priorityQueueReversed.pop();
+        if(!this->visitedReversed[get<1>(currentReversed)])
+          this->expandReversed(get<1>(currentReversed), get<0>(currentReversed), true);
+      }
+
       int meetNode = this->bestMeetNode();
+      //std::cout<< "meetNode: " << meetNode << std::endl;
       int currNode = meetNode;
       result->pathCost = this->distancesReversed[currNode];
       std::vector<Node> path;
       path.insert(path.begin(), this->graph->nodes[currNode]);
       while (currNode != target){
+        //std::cout<< "way to target " << currNode << " " << target << std::endl;
         currNode = this->graph->edgesReversed[this->parentsReversed[currNode]].srcID;
         //result->pathCost = result->pathCost + this->graph->edgesReversed[this->parentsReversed[currNode]].cost;
         path.insert(path.begin(), this->graph->nodes[currNode]);
@@ -205,10 +231,13 @@ void Search::oneToOne(int source, int target, Result* result){
       currNode = meetNode;
       result->pathCost = result->pathCost + this->distances[currNode]; 
       while (currNode != source){
+        //std::cout<< "way to source " << currNode << " " << target << std::endl;
         currNode = this->graph->edges[this->parents[currNode]].srcID;
         //result->pathCost = result->pathCost + this->graph->edges[this->parents[currNode]].cost;
         result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
       }
+      t2 = std::chrono::high_resolution_clock::now();
+      result->timeForSearch = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
       break;
     }
     
@@ -219,6 +248,8 @@ void Search::oneToOne(int source, int target, Result* result){
     if(!this->visitedReversed[get<1>(currentReversed)])
       this->expandReversed(get<1>(currentReversed), get<0>(currentReversed));
   }
+  t2 = std::chrono::high_resolution_clock::now();
+  result->timeForSearch = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
   return;
 }
 

@@ -1,7 +1,8 @@
 import * as coreActions from './actions'
 import * as mqttActions from '../mqtt/actions'
 import * as mapActions from '../map/actions'
-import { nextTick } from 'q';
+import * as helpers from '../../helpers'
+
 
 const axios = require('axios');
 
@@ -67,14 +68,23 @@ const coreMiddleware = (function(){
                 next(action)
                 break;
             case 'GET_ROUTE_BY_COORDINATE':
-                var coordinates = {
-                        "srcLongitude" : store.getState().map.friendCoordinates[1], 
-                        "srcLatitude" : store.getState().map.friendCoordinates[0], 
-                        "trgLongitude" : store.getState().map.currentCoordinates[1], 
-                        "trgLatitude" : store.getState().map.currentCoordinates[0]
-                    }
                 if (!store.getState().core.routeonrequest){
+                    var coordinates = {
+                            "srcLongitude" : store.getState().map.friendCoordinates[1], 
+                            "srcLatitude" : store.getState().map.friendCoordinates[0], 
+                            "trgLongitude" : store.getState().map.currentCoordinates[1], 
+                            "trgLatitude" : store.getState().map.currentCoordinates[0]
+                        }
+                    if (store.getState().map.route.nodes){
+                        var nodes = store.getState().map.route.nodes.slice(0,300)
+                        var selectedPosition = helpers.getPositionByEpsilonDistance(store.getState().map.friendCoordinates,nodes,70)
+                        coordinates.srcLatitude = selectedPosition[0]
+                        coordinates.srcLongitude = selectedPosition[1]
+                    }
+                    //console.log(coordinates)
+                    //console.log(selectedPosition)
                     action.routeonrequest = true
+
                     axios({
                         method: 'post',
                         url: '/routebycoordinate',

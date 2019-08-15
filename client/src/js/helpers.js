@@ -48,3 +48,37 @@ export let setStorage = function(key, value, replace = false){
 		return;
 	}
 }
+
+export function pointDistance(x,y){
+	var R = 6371e3; // metres
+	var φ1 = x[0] * Math.PI/180
+	var φ2 = y[0] * Math.PI/180
+	var Δφ = (y[0]-x[0]) * Math.PI/180
+	var Δλ = (y[1]-x[1]) * Math.PI/180
+
+	var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+        Math.cos(φ1) * Math.cos(φ2) *
+        Math.sin(Δλ/2) * Math.sin(Δλ/2);
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+	var d = R * c;
+	return d
+}
+
+export function getPositionByEpsilonDistance(point, pointlist, e){
+	var currentShortestDistance = e+1;
+	var pointOfList =0; 
+	pointlist.forEach(i =>{
+		var nodeOfPath = [Number.parseFloat(i[0].replace(',','.').replace(' ','')), Number.parseFloat(i[1].replace(',','.').replace(' ',''))]
+		if (pointDistance(point, nodeOfPath) < currentShortestDistance ){
+			currentShortestDistance = pointDistance(point, nodeOfPath)
+			pointOfList = nodeOfPath
+		}
+	})
+	//console.log(currentShortestDistance)
+	if (currentShortestDistance < e){
+		return pointOfList
+	}else{
+		return point
+	}
+}
