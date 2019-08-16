@@ -55,3 +55,9 @@ make
 ```
 ./main.out --path-to-pbf--
 ```
+
+##Docker
+```
+docker build -t osmfapra .
+docker run --name osmfapra -e PBFFILENAME=germany-latest.osm.pbf -p 8080:8080 -p 15672:15672 -p 15673:15673 osm
+```

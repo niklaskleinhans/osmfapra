@@ -49,7 +49,7 @@ void Webserver::run_server(Graph *graph){
 // HTTP-server at port 8080 using 1 thread
   // Unless you do more heavy non-threaded processing in the resources,
   // 1 thread is usually faster than several threads
-  HttpServer server("server.crt", "server.key");
+  HttpServer server("../../data/server.crt", "../../data/server.key");
   server.config.port = 8080;
   // Default GET-example. If no other matches, this anonymous function will be called.
   // Will respond with content in the web/-directory, and its subdirectories.

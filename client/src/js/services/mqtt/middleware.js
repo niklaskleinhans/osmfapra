@@ -5,6 +5,7 @@ import * as mapActions from '../map/actions'
 const mqttConfig = {
     //url: 'ws://192.168.1.21:15675/ws',
     url: 'wss://' + window.location.hostname +':15673/ws',
+    //url: 'ws://' + window.location.hostname +':15675/ws',
     opt: {
       clientId: 'osm-' + Date.now(),
       protocolId: 'MQIsdp',

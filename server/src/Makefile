@@ -1,13 +1,12 @@
 CXXFLAGS= -std=c++11 -Wall -g -march=native -O3
 TARGETOS= $(shell uname -s)
-export OPENSSL_ROOT_DIR = "/usr/local/opt/openssl"
 
 ifeq ($(TARGETOS), Darwin)
     LIBS=-losmpbf -lprotobuf -lz -pthread  -lboost_thread-mt -lboost_system -lboost_filesystem -lssl -lcrypto 
 	MACLIB=-L /usr/local/opt/openssl/lib
 	MACINC=-I /usr/local/opt/openssl/include
 else 
-    LIBS=-losmpbf -lprotobuf -lz -lpthread -pthread -lboost_thread -lboost_system -lboost_filesystem
+    LIBS=-losmpbf -lprotobuf -lz -lpthread -pthread -lboost_thread -lboost_system -lboost_filesystem -lssl -lcrypto
 endif
 
 LIB=-L ./../libs/osmpbf/build/osmpbf/ 

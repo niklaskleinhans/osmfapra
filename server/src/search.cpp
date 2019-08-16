@@ -6,6 +6,9 @@
 #include <iostream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+#ifdef __linux__
+#include <chrono>
+#endif
 
 Search::Search(Graph* graph)
 {
