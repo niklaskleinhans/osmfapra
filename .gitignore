@@ -1,5 +1,11 @@
 # Data
 data/*
+!data/example.com-key.pem
+!data/example.com.pem
+!data/server.crt
+!data/server.key
+
+
 
 # Builded webclient
 server/web/*
