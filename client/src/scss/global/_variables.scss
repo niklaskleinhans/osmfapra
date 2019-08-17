@@ -1,0 +1,65 @@
+$dark: #3f4e5f;
+$light: #efe1d6;
+$mid_light: #dcc8c0;
+$light_green: #a7bfb4;
+$light_blue: #8aacc3;
+$light_red: #cd8989;
+
+$bp_wide: 1000px;
+$bp_medium: 800px;
+$bp_small: 500px;
+$bp_narrow: 350px;
+$bp_shallow: 650px;
+
+
+/** 
+ * General animations
+ **/
+
+ @mixin animate($duration: 0.2s, $easing: ease-in-out){
+	-webkit-transition: all $duration $easing;
+	   -moz-transition: all $duration $easing;
+		 -o-transition: all $duration $easing;
+		    transition: all $duration $easing; 
+}
+
+@mixin noanimate(){
+	-webkit-transition: none !important;
+	   -moz-transition: none !important;
+	     -o-transition: none !important;
+	        transition: none !important;
+}
+
+
+/** 
+ * Responsive Stuff
+ **/
+
+
+@mixin responsive($max_width: null, $min_width: null, $max_height: null, $min_height: null){
+	@if $max_width and $max_height {
+		@media(max-width: $max_width ), (max-height: $max_height){ 
+			@content;
+		}
+	}@else if $max_width and $min_width {
+		@media(max-width: $max_width ) and (min-width: $min_width){ 
+			@content;
+		}
+	}@else if $max_width {
+		@media(max-width: $max_width){ 
+			@content;
+		}
+	}@else if $max_height {
+		@media(max-height: $max_height){ 
+			@content;
+		}
+	}@else if $min_width {
+		@media(min-width: $min_width){ 
+			@content;
+		}
+	}@else if $min_height {
+		@media(min-height: $min_height){ 
+			@content;
+		}
+	}
+}

@@ -24,6 +24,7 @@ let reducers = combineReducers({
 let initialState = {
     core:{
         name : 'NIXDA',
+        sidebar_open: true,
         routeonrequest : false
     },
     mqtt:{

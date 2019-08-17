@@ -3,6 +3,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+
 import FilledInput from '@material-ui/core/FilledInput'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -32,13 +35,18 @@ class Sidebar extends React.Component{
 
     render(){
         return(
-            <aside> 
-            <div>OSM Stuff</div>
-            <button onClick={e => this.generateShareLink(e)}>Generate Share Link</button>
-            <FilledInput disabled value={this.props.sharelink}/>
-            <button onClick={e => this.calculateRoute(e)}>CalculateRoute</button>
-            {this.props.pathCost ? <h3>{this.calculateTime()}</h3> : null}
-            {this.props.calculationTime ? <h3>{(this.props.calculationTime/1000000).toFixed(2)}</h3> : null}
+            <aside>
+                <div className="liner">
+                    <div>OSM Stuff</div>
+                    <button onClick={e => this.generateShareLink(e)}>Generate Share Link</button>
+                    <FilledInput disabled value={this.props.sharelink}/>
+                    <button onClick={e => this.calculateRoute(e)}>CalculateRoute</button>
+                    {this.props.pathCost ? <h3>{this.calculateTime()}</h3> : null}
+                    {this.props.calculationTime ? <h3>{(this.props.calculationTime/1000000).toFixed(2)}</h3> : null}
+                </div>
+                <div className="close" onClick={e => this.props.coreActions.toggleSidebar(false)}>
+                    <FontAwesomeIcon icon={faAngleLeft} size="2x"></FontAwesomeIcon>
+                </div>
             </aside>
         )
     }

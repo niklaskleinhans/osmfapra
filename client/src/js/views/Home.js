@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Map from '../components/Map'
 import Sidebar from '../components/Sidebar'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
+
 import * as coreActions from '../services/core/actions'
 import * as mqttActions from '../services/mqtt/actions'
 import { bindActionCreators } from 'redux';
@@ -23,10 +26,21 @@ class Home extends Component{
     }
 
     render(){
+        var className = '';
+        if (this.props.sidebar_open){
+            className += ' sidebar-open'
+        }
         return(
-            <div>
+            <div className = {className}>
                 <Sidebar></Sidebar>
                 <Map></Map>
+                {!this.props.sidebar_open ?
+                <div className="sidebar-trigger" > 
+                    <a onClick={() => this.props.coreActions.toggleSidebar()}>
+                        <FontAwesomeIcon icon={faAngleRight} size="2x"></FontAwesomeIcon>
+                    </a>    
+                </div> : null
+                }
             </div>
         )
     }
@@ -34,7 +48,8 @@ class Home extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        name : state.core.name
+        name : state.core.name,
+        sidebar_open : state.core.sidebar_open
 
     }
 }

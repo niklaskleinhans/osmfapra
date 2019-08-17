@@ -23,6 +23,19 @@ function fillNotification(data){
    return notification
 }
 
+/* UI Stuff */
+export function toggleSidebar(new_state = 'toggle') {
+    var action = {
+        type: 'TOGGLE_SIDEBAR'
+    }
+    if (new_state != 'toggle'){
+        action.new_state = new_state
+    }
+    return action
+}
+
+
+
 /* Noficiations stuff */
 export function createNotification(data){
     return {
@@ -45,6 +58,7 @@ export function removeNotification(key, manual = false){
     }
 }
 
+/* Routing stuff */
 export function generateShareLink(){
     return {
         type: 'GENERATE_SHARE_LINK'
