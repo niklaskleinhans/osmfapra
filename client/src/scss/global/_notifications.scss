@@ -50,8 +50,11 @@
 	animation-timing-function: linear;
 	animation-iteration-count: 1;
 }
-.good{
+.info{
 	background-color: $dark;
+}
+.good {
+	background-color: $light_green;
 }
 .bad{
 	background-color: $light_red;

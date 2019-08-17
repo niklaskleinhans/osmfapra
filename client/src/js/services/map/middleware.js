@@ -1,9 +1,17 @@
 import * as mqttActions from '../mqtt/actions'
+import * as coreActions from '../core/actions'
 import * as helpers from '../../helpers'
 
 const mapMiddleware = (function(){
     return store => next => action => {
         switch (action.type) {
+
+            case 'UPDATE_COORDINATES_FRIEND':
+                if (!store.getState().map.friendCoordinates){
+                    store.dispatch(coreActions.createNotification({content: "Friend is Connected", type: 'info'}))
+                }
+                next(action)
+                break;
             
             case 'GET_CURRENT_LOCATION':
                 navigator.geolocation.getCurrentPosition(position => {

@@ -24,6 +24,14 @@ aside{
 	color: $light;
 	box-sizing: border-box;
 
+	.button-action{
+		background-color: $light_green;
+	}
+	.sharedfield{
+		background-color: $light;
+		color: $light_green
+	}
+
 	.sidebar-open & {
 		-ms-transform: translate(220px, 0);
 		-webkit-transform: translate(220px, 0);
@@ -42,18 +50,6 @@ aside{
 		overflow-y: auto;
 	}
 
-	.branding {
-		height: 50px;
-		margin-top: 30px;
-		opacity: 0.2;
-/*
-		background: {
-			image: url('../assets/icon.svg');
-			position: 50% 50%;
-			repeat: no-repeat;
-			size: contain;
-		}*/
-	}
 
 	nav {
 		z-index: 2;

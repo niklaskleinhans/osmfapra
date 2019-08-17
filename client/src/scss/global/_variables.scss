@@ -30,6 +30,24 @@ $bp_shallow: 650px;
 	        transition: none !important;
 }
 
+@mixin fadein($duration: 0.2s){
+	@keyframes fadein {
+	    0% {
+	    	opacity: 0;
+	    	transform: translateY(5px);
+	    }
+	    100% {
+	    	opacity: 1;
+	    	transform: translateY(0px);
+	    }
+	}
+
+    animation-name: fadein;
+    animation-duration: $duration;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
 
 /** 
  * Responsive Stuff

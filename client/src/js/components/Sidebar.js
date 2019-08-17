@@ -5,6 +5,10 @@ import { bindActionCreators } from 'redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
 
 import FilledInput from '@material-ui/core/FilledInput'
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,12 +41,40 @@ class Sidebar extends React.Component{
         return(
             <aside>
                 <div className="liner">
-                    <div>OSM Stuff</div>
-                    <button onClick={e => this.generateShareLink(e)}>Generate Share Link</button>
-                    <FilledInput disabled value={this.props.sharelink}/>
-                    <button onClick={e => this.calculateRoute(e)}>CalculateRoute</button>
-                    {this.props.pathCost ? <h3>{this.calculateTime()}</h3> : null}
-                    {this.props.calculationTime ? <h3>{(this.props.calculationTime/1000000).toFixed(2)}</h3> : null}
+                    <div className="brand">OSM HOWLONG</div>
+                    <div>
+                        {this.props.sharelink? 
+                            <TextField
+                            id="filled-read-only-input"
+                            label="sharelink"
+                            defaultValue={this.props.sharelink}
+                            className="sharedfield"
+                            margin="normal"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            variant="filled"
+                        /> :    
+                        <Button onClick={e => this.generateShareLink(e) }  className = "button-action" variant="contained" >
+                        Generate Share Link
+                        </Button>
+                        }  
+                    </div>
+                    <div>
+                        {this.props.calculationTime? 
+                            <TextField
+                            id="filled-read-only-input"
+                            label="Algorithmtime in seconds"
+                            value={(this.props.calculationTime/1000000).toFixed(2)}
+                            className="sharedfield"
+                            margin="normal"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            variant="filled"
+                        /> : null}  
+                    </div>
+
                 </div>
                 <div className="close" onClick={e => this.props.coreActions.toggleSidebar(false)}>
                     <FontAwesomeIcon icon={faAngleLeft} size="2x"></FontAwesomeIcon>

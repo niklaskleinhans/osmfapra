@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
+import ArrivalDisplay from '../components/ArrivalDisplay'
 import Map from '../components/Map'
 import Sidebar from '../components/Sidebar'
 
@@ -32,6 +33,7 @@ class Home extends Component{
         }
         return(
             <div className = {className}>
+                <ArrivalDisplay/>
                 <Sidebar></Sidebar>
                 <Map></Map>
                 {!this.props.sidebar_open ?
