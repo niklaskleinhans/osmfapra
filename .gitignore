@@ -4,6 +4,7 @@ data/*
 !data/example.com.pem
 !data/docker_rabbitmq.config
 !data/docker_rabbitmq-env.conf
+!data/osmfapra_example.gif
 
 
 # Builded webclient
