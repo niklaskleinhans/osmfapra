@@ -15,15 +15,24 @@ The clients communicate via the secured MQTT protocol. The bidirectional Dijkstr
 - git 
 - rabbitmq >= 3.7.17
 
-In .scripts there are some example installation scripts. For building the client some additional requirements are needed:
-- nodejs >= 10.10.0
-- angular CLI >= 7.2.1
+In .scripts there are some example installation scripts. 
+On Ubuntu 18.04 all requirements could be installed by running:
+```
+cd .scripts
+sudo ./install-server_requirements.sh && \
+sudo ./install-protobuf-sourcecode.sh && \
+sudo ./install-rabbitmq.sh
+```
+
+For building the client some additional requirements are needed:
+- nodejs >= 12.7.0
+- npm >=6.9
 
 #### Client
 ```
 cd ./client/
 npm install
-ng build
+npm run-script build
 ```
 
 #### Server
@@ -32,22 +41,14 @@ ng build
 ```
 cd server/libs/osmpbf
 git submodule init
-git submodules update --recursive --remote
+git submodule update --recursive --remote
 cd generics && git submodule init && cd ..
-git submodules update --recursive --remote
+git submodule update --recursive --remote
 mkdir -p build
 rm -f CMakeCache.txt
-cd build && rm -r * && cmake .. # (for mac instead use cmake . -B ./build && cd build)
+cd build && cmake .. # (for mac instead use cmake . -B ./build && cd build)
 make
 ```
-cd server/libs/osmpbf && \
-    git submodule init && \
-    git submodule update --recursive --remote && \
-    cd generics && git submodule init && cd .. && \
-    git submodule update --recursive --remote && \
-    mkdir -p build && \
-    rm -f CMakeCache.txt && \
-    cd build && rm -r * && cmake .. && make
 
 ##### lib/Simple-Web-Server
 ```
@@ -73,9 +74,9 @@ To generate certificates for development you can use mkcert (https://github.com/
 
 
 2. config rabbitmq
-edit config file in data/rabbitmq.config and enter the correct certificate path. Then copy the config file:
+edit config file in data/docker_rabbitmq.config and enter the correct certificate path. Then copy the config file:
 ```
-cp ./data/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+cp ./data/docker_rabbitmq.config /etc/rabbitmq/rabbitmq.config
 ```
 
 3. Start and install plugins

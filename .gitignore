@@ -2,9 +2,8 @@
 data/*
 !data/example.com-key.pem
 !data/example.com.pem
-!data/server.crt
-!data/server.key
-
+!data/docker_rabbitmq.config
+!data/docker_rabbitmq-env.conf
 
 
 # Builded webclient
