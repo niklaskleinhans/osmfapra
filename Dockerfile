@@ -43,9 +43,9 @@ RUN cd server/libs/osmpbf && \
     git submodule update --recursive --remote && \
     cd generics && git submodule init && cd .. && \
     git submodule update --recursive --remote && \
-    mkdir -p build && \
+    rm -rf ./build && mkdir -p build && \
     rm -f CMakeCache.txt && \
-    cd build && rm -r * && cmake .. && make
+    cd build && cmake .. && make
 
 # building application binary 
 RUN cd /usr/app/server/src && make

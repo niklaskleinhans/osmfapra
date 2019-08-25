@@ -44,7 +44,7 @@ git submodule init
 git submodule update --recursive --remote
 cd generics && git submodule init && cd ..
 git submodule update --recursive --remote
-mkdir -p build
+rm -rf ./build && mkdir -p build
 rm -f CMakeCache.txt
 cd build && cmake .. # (for mac instead use cmake . -B ./build && cd build)
 make
@@ -74,6 +74,11 @@ To generate certificates for development you can use mkcert (https://github.com/
 
 
 2. config rabbitmq
+Make sure that rabbitmq is not running
+```
+sudo rabbitmqctl stop
+```
+
 edit config file in data/docker_rabbitmq.config and enter the correct certificate path. Then copy the config file:
 ```
 cp ./data/docker_rabbitmq.config /etc/rabbitmq/rabbitmq.config
