@@ -73,9 +73,9 @@ To generate certificates for development you can use mkcert (https://github.com/
 
 
 2. config rabbitmq
-edit config file in data/docker_rabbitmq.config and enter the correct certificate path. Then copy the config file:
+edit config file in data/rabbitmq.config and enter the correct certificate path. Then copy the config file:
 ```
-cp ./data/docker_rabbitmq.config /etc/rabbitmq/rabbitmq.config
+cp ./data/rabbitmq.config /etc/rabbitmq/rabbitmq.config
 ```
 
 3. Start and install plugins
