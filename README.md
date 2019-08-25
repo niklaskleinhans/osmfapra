@@ -99,12 +99,16 @@ cd server
 ### [Option 2] Use Docker
 #### Requirements
 - docker engine >= 19.03
+
 #### Build
+
+Before you start building the Image, make sure you have copied the correct osm.pbf file into the data folder. Later you will pass the filename to the container environment   
 ```
 docker build -t osm .
 ```
 
 #### run
+
 ```
 docker run --name osmfapra -e PBFFILENAME=germany-latest.osm.pbf -p 8080:8080 -p 15672:15672 -p 15673:15673 osm
 ```
