@@ -3,6 +3,8 @@ In Case of the practical Course "OpenStreetMaps" an Application to share the cur
 
 The clients communicate via the secured MQTT protocol. The bidirectional Dijkstra is used for Way calculation.
 
+![](./data/osmfapra_example.gif)
+
 ## How to Build
 ### [Option 1] Compile the Source
 #### Requirements
