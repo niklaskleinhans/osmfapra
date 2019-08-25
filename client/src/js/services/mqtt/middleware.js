@@ -32,6 +32,7 @@ const mqttMiddleware = (function(){
                 next(action)
                 break;
             case 'MQTT_ERROR':
+                console.log(action.error)
                 store.dispatch(coreActions.createNotification({content: action.error, type: 'bad'}))
                 next(action)
                 break;

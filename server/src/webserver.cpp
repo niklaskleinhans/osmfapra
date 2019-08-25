@@ -225,7 +225,7 @@ void Webserver::run_server(Graph *graph){
   thread server_thread([&server]() {
     // Start server
       std::cout<<"Started Webserver" << std::endl;
-      std::cout<<"Open in your browser: " << "http://localhost" << ":" << server.config.port << std::endl;
+      std::cout<<"Open in your browser: " << "https://localhost" << ":" << server.config.port << std::endl;
     server.start();
   });
   

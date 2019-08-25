@@ -18,7 +18,11 @@ const mapMiddleware = (function(){
                     action.position = position;
                     next(action)
                 },
-                error => alert(error.message));
+                error => {
+                    alert(error.message);
+                    console.log(error)
+
+                })
                 break;
             
             case 'SEND_LOCATION':

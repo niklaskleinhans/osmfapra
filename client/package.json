@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.2.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.21",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@material-ui/core": "^4.3.1",
     "@svgr/webpack": "^4.2.0",
     "axios": "^0.19.0",
@@ -49,6 +52,7 @@
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
     "react-dom": "^16.8.1",
+    "react-fontawesome": "^1.6.1",
     "react-geolocated": "^2.4.1",
     "react-leaflet": "^2.2.1",
     "react-redux": "^6.0.1",

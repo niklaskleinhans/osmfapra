@@ -62,7 +62,7 @@ const coreMiddleware = (function(){
                 next(action);
                 break;
             case 'GENERATE_SHARE_LINK':
-                var sharelinkkey = 13333443
+                var sharelinkkey = Math.random().toString(36).substr(2, 16);
                 store.dispatch(mqttActions.generateShareLinkListener(sharelinkkey))
                 action.sharelink = window.location.href + 'sharelocation'+ '/'+ sharelinkkey
                 next(action)
