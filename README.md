@@ -51,11 +51,11 @@ make
 ```
 
 ##### lib/Simple-Web-Server
+Maybe done by step before
 ```
 cd server/libs/Simple-Web-Server
 git submodule init
 git submodules update --recursive --remote
-git clone https://github.com/eidheim/Simple-Web-Server.git .
 ```
 
 ##### server
@@ -101,7 +101,7 @@ cd server
 - docker engine >= 19.03
 #### Build
 ```
-docker build -t osmfapra .
+docker build -t osm .
 ```
 
 #### run
