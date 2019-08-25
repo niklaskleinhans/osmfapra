@@ -36,7 +36,8 @@ const mapMiddleware = (function(){
             case 'UPDATE_COORDINATES_FRIEND':
                 if(store.getState().map.friendCoordinates){
                     // check if the new friend is less then 5km away from old position. Instead ins an unrealistic update
-                    if(helpers.pointDistance(action.payload.position, store.getState().map.friendCoordinates)> 5000){
+                    var epsilon= store.getState().core.config.epsilonDistanceMax
+                    if(helpers.pointDistance(action.payload.position, store.getState().map.friendCoordinates)> epsilon){
                         action.payload.position=store.getState().map.friendCoordinates
                     }
                 }

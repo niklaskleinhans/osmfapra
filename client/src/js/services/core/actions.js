@@ -23,6 +23,20 @@ function fillNotification(data){
    return notification
 }
 
+/* Init Stuff */
+
+export function initConfigurations(epsilonDistancePath, epsilonDistanceMax){
+    var config = {
+        epsilonDistancePath : epsilonDistancePath,
+        epsilonDistanceMax : epsilonDistanceMax
+    }
+    return {
+        type: 'INIT_CONFIGURATIONS',
+        payload: config
+    }
+}
+
+
 /* UI Stuff */
 export function toggleSidebar(new_state = 'toggle') {
     var action = {

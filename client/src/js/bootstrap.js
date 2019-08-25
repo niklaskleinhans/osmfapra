@@ -2,8 +2,8 @@ import {createStore, applyMiddleware, combineReducers} from 'redux';
 import geoMiddleware from 'redux-effects-geolocation';
 import * as helpers from './helpers'
 import thunk from 'redux-thunk'
-//import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import { composeWithDevTools } from 'redux-devtools-extension/';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+//import { composeWithDevTools } from 'redux-devtools-extension/';
 
 import { routerReducer } from 'react-router-redux'
 import core from './services/core/reducer'

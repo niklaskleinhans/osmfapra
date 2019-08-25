@@ -77,7 +77,11 @@ const coreMiddleware = (function(){
                         }
                     if (store.getState().map.route.nodes){
                         var nodes = store.getState().map.route.nodes.slice(0,300)
-                        var selectedPosition = helpers.getPositionByEpsilonDistance(store.getState().map.friendCoordinates,nodes,70)
+
+                        // choose node on Path if distance between nearest Pathnode and new node is smaller then epsilon(in meters)
+                        var epsilon = store.getState().core.config.epsilonDistancePath
+                        var selectedPosition = helpers.getPositionByEpsilonDistance(store.getState().map.friendCoordinates,nodes,epsilon)
+
                         coordinates.srcLatitude = selectedPosition[0]
                         coordinates.srcLongitude = selectedPosition[1]
                     }

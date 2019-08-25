@@ -6,6 +6,7 @@ import Notifications from './components/Notifications'
 import Home from './views/Home'
 
 import * as mqttActions from './services/mqtt/actions'
+import * as coreActions from './services/core/actions'
 
 class App extends Component {
 
@@ -13,10 +14,12 @@ class App extends Component {
     super(props)
   }
 
+  componentWillMount(){
+    this.props.coreActions.initConfigurations(80,5000)
+  }
+
   componentDidMount(){
-    var actionTopicMapping = {
-        'RECEIVE_COORDINATES': 'client/coordinates/1234'
-    };
+    var actionTopicMapping = {};
     this.props.mqttActions.initMqttConnection(actionTopicMapping)
   }
 
@@ -40,7 +43,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    mqttActions: bindActionCreators(mqttActions, dispatch)
+    mqttActions: bindActionCreators(mqttActions, dispatch),
+    coreActions: bindActionCreators(coreActions, dispatch)
   }
 }
 

@@ -24,6 +24,8 @@ export default function reducer(core = {}, action){
             return Object.assign({}, core, {sharelink: action.sharelink})
         case 'GET_ROUTE_BY_COORDINATE':
             return Object.assign({}, core, {routeonrequest: action.routeonrequest})
+        case 'INIT_CONFIGURATIONS':
+            return Object.assign({}, core, {config: action.payload})
         default:
             return core;
     }
