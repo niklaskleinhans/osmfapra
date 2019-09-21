@@ -155,12 +155,16 @@ void Webserver::run_server(Graph *graph){
     // std::cout << std::setprecision(16) << pt.get<double>("srcLongitude") << std::endl;
     int srcIDX = Search::findNode(graph, pt.get<double>("srcLongitude"), pt.get<double>("srcLatitude"));
     int trgIDX = Search::findNode(graph, pt.get<double>("trgLongitude"), pt.get<double>("trgLatitude"));
+    std::string algorithm = pt.get<std::string>("algorithm");
 
     Result result;
     if ( srcIDX != -1 && trgIDX !=-1){
       Search search(graph);
-
-      search.oneToOneBidirectional(srcIDX, trgIDX, &result);
+      if (algorithm.compare("dijkstra") == 0 ){
+        search.oneToOne(srcIDX, trgIDX, &result);
+      }else{
+        search.oneToOneBidirectional(srcIDX, trgIDX, &result);
+      }
     
       pt.add_child("nodes", path_to_ptree(result.path));
       pt.put("pathCost", result.pathCost);

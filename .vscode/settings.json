@@ -17,5 +17,13 @@
         "algorithm": "cpp",
         "cfenv": "cpp",
         "utility": "cpp"
-    }
+    },
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ]
 }

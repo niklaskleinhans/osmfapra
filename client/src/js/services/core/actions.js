@@ -95,3 +95,23 @@ export function getRouteByCoordinate(){
     }
 }
 
+export function setAlgorithm(algorithm="bidirectionaldijkstra"){
+    return {
+        type: 'SET_ALGORITHM',
+        payload: algorithm
+    }
+}
+
+export function changeEpsilonDistancePath(value){
+    return {
+        type: 'CHANGE_EPSILONDISTANCEPATH',
+        payload: value
+    }
+}
+
+export function changeEpsilonDistanceMax(value){
+    return {
+        type: 'CHANGE_EPSILONDISTANCEMAX',
+        payload: value
+    }
+}

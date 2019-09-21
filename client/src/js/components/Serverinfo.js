@@ -1,16 +1,17 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHashtag, faStopwatch, faTimes } from '@fortawesome/free-solid-svg-icons'
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import { bindActionCreators } from 'redux'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHashtag, faStopwatch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import * as coreActions from '../services/core/actions'
 
 

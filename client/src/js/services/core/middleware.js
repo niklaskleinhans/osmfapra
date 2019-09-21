@@ -27,9 +27,7 @@ const coreMiddleware = (function(){
                     next(action)
                 }).catch(e =>{
                     console.log(e)
-                    next(action)
                 })
-                next(action)
                 break;
 
             case 'CREATE_NOTIFICATION':
@@ -91,7 +89,8 @@ const coreMiddleware = (function(){
                             "srcLongitude" : store.getState().map.friendCoordinates[1], 
                             "srcLatitude" : store.getState().map.friendCoordinates[0], 
                             "trgLongitude" : store.getState().map.currentCoordinates[1], 
-                            "trgLatitude" : store.getState().map.currentCoordinates[0]
+                            "trgLatitude" : store.getState().map.currentCoordinates[0],
+                            "algorithm" : store.getState().core.algorithm
                         }
                     if (store.getState().map.route.nodes){
                         var nodes = store.getState().map.route.nodes.slice(0,300)

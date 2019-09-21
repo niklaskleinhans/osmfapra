@@ -29,6 +29,16 @@ export default function reducer(core = {}, action){
             return Object.assign({}, core, {config: action.payload})
         case 'GET_SERVERINFO':
             return Object.assign({}, core, {serverinfo: action.payload})
+        case 'SET_ALGORITHM':
+            return Object.assign({}, core, {algorithm: action.payload})
+        case 'CHANGE_EPSILONDISTANCEPATH':
+            var config = Object.assign({}, core.config);
+            config.epsilonDistancePath = action.payload;
+            return Object.assign({}, core, {config: config});
+        case 'CHANGE_EPSILONDISTANCEMAX':
+            var config = Object.assign({}, core.config);
+            config.epsilonDistanceMax = action.payload;
+            return Object.assign({}, core, {config: config});
         default:
             return core;
     }

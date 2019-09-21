@@ -170,6 +170,7 @@ void Search::oneToOne(int source, int target, Result* result){
       result->distance = get<0>(current);
       int currNode = target;
       result->path.insert(result->path.begin(), this->graph->nodes[currNode]);
+      result->pathCost = this->distances[currNode];
       while (currNode != source){
         currNode = this->graph->edges[this->parents[currNode]].srcID;
         result->path.insert(result->path.begin(), this->graph->nodes[currNode]);

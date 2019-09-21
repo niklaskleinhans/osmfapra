@@ -1,9 +1,11 @@
 # Data
-data/*
+data/
 !data/example.com-key.pem
 !data/example.com.pem
 !data/docker_rabbitmq.config
 !data/docker_rabbitmq-env.conf
+!data/osm_ui_stats.png
+!data/osm_ui.png
 !data/osmfapra_example.gif
 
 
