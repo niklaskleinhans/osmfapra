@@ -14,6 +14,24 @@ const coreMiddleware = (function(){
                 next(action)
                 break;
 
+            case 'GET_SERVERINFO':
+                axios({
+                    method: 'get',
+                    url: '/getserverinfo'
+                }).then((res)=>{
+                    action.payload = {
+                        nodecount: parseInt(res.data.nodecount),
+                        edgecount: parseInt(res.data.edgecount),
+                        importtime: parseInt(res.data.timeForImport)
+                    }
+                    next(action)
+                }).catch(e =>{
+                    console.log(e)
+                    next(action)
+                })
+                next(action)
+                break;
+
             case 'CREATE_NOTIFICATION':
 
                 // start a timeout to close this notification

@@ -41,8 +41,8 @@ class Sidebar extends React.Component{
         return(
             <aside>
                 <div className="liner">
-                    <div className="brand">OSM HOWLONG</div>
-                    <div>
+                <div className="brand">OSM HOWLONG</div>
+                <div>
                         {this.props.sharelink? 
                             <TextField
                             id="filled-read-only-input"
@@ -75,6 +75,11 @@ class Sidebar extends React.Component{
                         /> : null}  
                     </div>
 
+                </div>
+                <div className="bottom-button">
+                    <Button onClick={e => this.props.coreActions.toggleServerinfo() }  className = "button-info" variant="contained" >
+                    Show Server Info
+                    </Button>
                 </div>
                 <div className="close" onClick={e => this.props.coreActions.toggleSidebar(false)}>
                     <FontAwesomeIcon icon={faAngleLeft} size="2x"></FontAwesomeIcon>

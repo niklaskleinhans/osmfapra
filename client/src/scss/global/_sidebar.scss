@@ -27,6 +27,9 @@ aside{
 	.button-action{
 		background-color: $light_green;
 	}
+	.button-info{
+		background-color: $light;
+	}
 	.sharedfield{
 		background-color: $light;
 		color: $light_green
@@ -144,6 +147,15 @@ aside{
 		padding: 10px 8px;
 		display: inline-block;
 		opacity: 0.5;
+		z-index: 100000;
+	}
+	
+	.bottom-button {
+		display: none;
+		position: absolute;
+		bottom: 40px;
+		left:0%;
+		display: inline-block;
 		z-index: 100000;
 	}
 

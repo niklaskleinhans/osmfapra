@@ -16,6 +16,7 @@ class App extends Component {
 
   componentWillMount(){
     this.props.coreActions.initConfigurations(80,5000)
+    this.props.coreActions.getServerinfo()
   }
 
   componentDidMount(){

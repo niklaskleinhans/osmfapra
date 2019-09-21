@@ -25,7 +25,13 @@ let initialState = {
     core:{
         name : 'NIXDA',
         sidebar_open: true,
-        routeonrequest : false
+        servinfo_open: false,
+        routeonrequest : false,
+        serverinfo:{
+            nodecount:0,
+            edgecount:0,
+            importtime:0,
+        }
     },
     mqtt:{
 

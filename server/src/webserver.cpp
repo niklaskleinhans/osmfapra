@@ -112,6 +112,35 @@ void Webserver::run_server(Graph *graph){
     }
   };
 
+
+  // Add route to search by coordinates
+  server.resource["^/getserverinfo$"]["GET"] = [&](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    try {
+    ptree pt;
+    std::ostringstream oss;
+    pt.put("nodecount", graph->nodecount);
+    pt.put("edgecount", graph->edgecount);
+    pt.put("timeForImport", (graph->durationImport + graph->durationSortAndOffset));
+
+    std::cout << "send callback now" << std::endl;
+
+    // TODO VÖLLIGER MIST
+    write_json(oss, pt);
+
+    std::string jsonString = oss.str();
+    //std::cout << jsonString << std::endl;
+    *response 
+    << "HTTP/1.1 200 OK\r\n"
+    << "Content-Length: " << jsonString.length() << "\r\n\r\n"
+    << jsonString;
+    }
+    catch(const exception &e) {
+      *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+                << e.what();
+    }
+  };
+
+
   // Add route to search by coordinates
   server.resource["^/routebycoordinate$"]["POST"] = [&](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
     try {

@@ -36,6 +36,12 @@ export function initConfigurations(epsilonDistancePath, epsilonDistanceMax){
     }
 }
 
+export function getServerinfo(){
+    return {
+        type: 'GET_SERVERINFO',
+    }
+}
+
 
 /* UI Stuff */
 export function toggleSidebar(new_state = 'toggle') {
@@ -48,7 +54,11 @@ export function toggleSidebar(new_state = 'toggle') {
     return action
 }
 
-
+export function toggleServerinfo() {
+    return {
+        type: 'TOGGLE_SERVERINFO'
+    }
+}
 
 /* Noficiations stuff */
 export function createNotification(data){

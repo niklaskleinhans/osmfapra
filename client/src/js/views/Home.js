@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ArrivalDisplay from '../components/ArrivalDisplay'
 import Map from '../components/Map'
 import Sidebar from '../components/Sidebar'
+import Serverinfo from '../components/Serverinfo'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
@@ -33,6 +34,7 @@ class Home extends Component{
         }
         return(
             <div className = {className}>
+                <Serverinfo/>
                 <ArrivalDisplay/>
                 <Sidebar></Sidebar>
                 <Map></Map>
