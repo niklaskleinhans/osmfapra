@@ -1,13 +1,16 @@
 # osmfapra - share your route
-In Case of the practical Course "OpenStreetMaps" an Application was designed to give your friend a chance to share his remaining arrival time with you. Send your friend a link and you will see his route. 
+In Case of the practical Course "OpenStreetMaps" an Application was designed to give your friend a chance to share his remaining arrival time with you. Send your friend a link and you will see his live route. 
 
-The communication is secure  cause of using the secured MQTT protocol. Multiple Algorithms for route calculation can be used.
+The communication is secure cause of using the secured MQTT and Websocket protocol. Multiple Algorithms for route calculation can be used.
  - Dijkstra
  - Bidirectional Dijkstra  
 
 ![](./data/images/osmfapra_example.gif)
 
+
 ## How to Build
+### Graphdata
+For the route calculation a the "Open Street Maps" graphdata in *.pbf format is used. Please download the file (e.g https://download.geofabrik.de/europe/germany.html) and save the file in the data folder.
 ### [Option 1] Compile the Source
 #### Requirements
 - cmake >= 3.9
